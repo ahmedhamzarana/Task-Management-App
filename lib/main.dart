@@ -1,8 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:task_management_app/providers/login_provider.dart';
+import 'package:task_management_app/providers/register_provider.dart';
+import 'package:task_management_app/providers/splash_provider.dart';
 import 'package:task_management_app/utils/app_routes.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => SplashProvider()),
+        ChangeNotifierProvider(create: (context) => LoginProvider()),
+        ChangeNotifierProvider(create: (context) => RegisterProvider()),
+      ],
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -10,7 +23,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Task Management App',
+      debugShowCheckedModeBanner: false,
+      title: 'Task Sync',
       initialRoute: AppRoutes.splashRoute,
       routes: AppRoutes.routes,
     );

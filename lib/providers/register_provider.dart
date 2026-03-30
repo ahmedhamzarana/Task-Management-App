@@ -27,7 +27,6 @@ class RegisterProvider extends ChangeNotifier {
   bool validateForm() {
     bool isValid = true;
 
-    // Username Validation
     if (usernameController.text.trim().isEmpty) {
       usernameError = "Username required";
       isValid = false;
@@ -35,7 +34,6 @@ class RegisterProvider extends ChangeNotifier {
       usernameError = "";
     }
 
-    // Email Validation
     if (emailController.text.trim().isEmpty) {
       emailError = "Email required";
       isValid = false;
@@ -46,7 +44,6 @@ class RegisterProvider extends ChangeNotifier {
       emailError = "";
     }
 
-    // Password Validation
     if (passwordController.text.isEmpty) {
       passwordError = "Password required";
       isValid = false;
@@ -57,7 +54,6 @@ class RegisterProvider extends ChangeNotifier {
       passwordError = "";
     }
 
-    // Confirm Password Validation
     if (confirmPasswordController.text.isEmpty) {
       confirmPasswordError = "Confirm password required";
       isValid = false;
@@ -79,7 +75,6 @@ class RegisterProvider extends ChangeNotifier {
     notifyListeners();
 
     try {
-      // 1. Sign up user in Supabase Auth
       final response = await supabase.auth.signUp(
         email: emailController.text.trim(),
         password: passwordController.text.trim(),
@@ -88,12 +83,10 @@ class RegisterProvider extends ChangeNotifier {
       final user = response.user;
       if (user == null) throw Exception("Signup failed");
 
-      // 2. Insert into custom table (WITHOUT the password)
       await supabase.from("tbl_users").insert({
         "id": user.id,
         "username": usernameController.text.trim(),
         "email": emailController.text.trim(),
-        // Security Note: Never store plain text passwords here.
       });
 
       if (context.mounted) {

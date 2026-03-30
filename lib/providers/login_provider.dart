@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:task_management_app/utils/app_routes.dart';
 
 class LoginProvider extends ChangeNotifier {
   final TextEditingController emailController = TextEditingController();
@@ -10,13 +11,12 @@ class LoginProvider extends ChangeNotifier {
   final supabase = Supabase.instance.client;
 
   bool isloading = false;
-  bool isvisbility = true; // Default to obscured
+  bool isvisbility = false;
   bool isrememeber = false;
 
   String emailError = "";
   String passwordError = "";
 
-  // Logic: if isvisbility is true, obscureText should be true
   void toggleVisibility() {
     isvisbility = !isvisbility;
     notifyListeners();
@@ -74,7 +74,7 @@ class LoginProvider extends ChangeNotifier {
       );
 
       // Handle Secure Storage
-      if (isrememeber) {
+      if (isrememeber == true) {
         await storage.write(key: "email", value: emailController.text.trim());
         await storage.write(
           key: "password",
@@ -88,10 +88,9 @@ class LoginProvider extends ChangeNotifier {
       if (context.mounted) {
         emailController.clear();
         passwordController.clear();
-        Navigator.pushReplacementNamed(context, "/appmainRoute");
+        Navigator.pushReplacementNamed(context, AppRoutes.appmainRoute);
       }
     } on AuthException catch (e) {
-      // Catch specific Supabase errors
       if (e.message.contains("Invalid login credentials")) {
         emailError = "Invalid email or password";
         passwordError = "Invalid email or password";

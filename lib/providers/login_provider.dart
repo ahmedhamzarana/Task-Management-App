@@ -12,7 +12,7 @@ class LoginProvider extends ChangeNotifier {
   bool isloading = false;
   bool isvisbility = true; // Default to obscured
   bool isrememeber = false;
-  
+
   String emailError = "";
   String passwordError = "";
 
@@ -76,7 +76,10 @@ class LoginProvider extends ChangeNotifier {
       // Handle Secure Storage
       if (isrememeber) {
         await storage.write(key: "email", value: emailController.text.trim());
-        await storage.write(key: "password", value: passwordController.text.trim());
+        await storage.write(
+          key: "password",
+          value: passwordController.text.trim(),
+        );
       } else {
         await storage.delete(key: "email");
         await storage.delete(key: "password");
@@ -91,6 +94,7 @@ class LoginProvider extends ChangeNotifier {
       // Catch specific Supabase errors
       if (e.message.contains("Invalid login credentials")) {
         emailError = "Invalid email or password";
+        passwordError = "Invalid email or password";
       } else {
         emailError = e.message;
       }

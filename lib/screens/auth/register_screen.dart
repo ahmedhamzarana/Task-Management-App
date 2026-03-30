@@ -190,9 +190,7 @@ class RegisterScreen extends StatelessWidget {
                           foregroundColor: AppColors.bglight,
                           padding: const EdgeInsets.symmetric(vertical: 14),
                         ),
-                        onPressed: registerprovider.isLoading
-                            ? null
-                            : () => registerprovider.register(context),
+                        onPressed: () => registerprovider.register(context),
                         child: registerprovider.isLoading
                             ? const SizedBox(
                                 height: 20,

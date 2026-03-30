@@ -55,13 +55,21 @@ class LoginScreen extends StatelessWidget {
                         hintStyle: const TextStyle(color: AppColors.bglight),
                         filled: true,
                         // SHOW ERROR HERE
-                        errorText: loginprovider.emailError.isEmpty ? null : loginprovider.emailError,
+                        errorText: loginprovider.emailError.isEmpty
+                            ? null
+                            : loginprovider.emailError,
                         fillColor: AppColors.bglight.withAlpha(25),
-                        prefixIcon: const Icon(Icons.email_outlined, color: AppColors.bglight),
+                        prefixIcon: const Icon(
+                          Icons.email_outlined,
+                          color: AppColors.bglight,
+                        ),
                         border: _buildBorder(),
                         enabledBorder: _buildBorder(),
                         focusedBorder: _buildBorder(),
-                        contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
+                        contentPadding: const EdgeInsets.symmetric(
+                          horizontal: 20,
+                          vertical: 14,
+                        ),
                       ),
                     ),
 
@@ -78,9 +86,14 @@ class LoginScreen extends StatelessWidget {
                         hintStyle: const TextStyle(color: AppColors.bglight),
                         filled: true,
                         // SHOW ERROR HERE
-                        errorText: loginprovider.passwordError.isEmpty ? null : loginprovider.passwordError,
+                        errorText: loginprovider.passwordError.isEmpty
+                            ? null
+                            : loginprovider.passwordError,
                         fillColor: AppColors.bglight.withAlpha(25),
-                        prefixIcon: const Icon(Icons.lock_outline_rounded, color: AppColors.bglight),
+                        prefixIcon: const Icon(
+                          Icons.lock_outline_rounded,
+                          color: AppColors.bglight,
+                        ),
                         suffixIcon: GestureDetector(
                           onTap: () => loginprovider.toggleVisibility(),
                           child: Icon(
@@ -93,7 +106,10 @@ class LoginScreen extends StatelessWidget {
                         border: _buildBorder(),
                         enabledBorder: _buildBorder(),
                         focusedBorder: _buildBorder(),
-                        contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
+                        contentPadding: const EdgeInsets.symmetric(
+                          horizontal: 20,
+                          vertical: 14,
+                        ),
                       ),
                     ),
 
@@ -110,14 +126,21 @@ class LoginScreen extends StatelessWidget {
                               side: const BorderSide(color: AppColors.bglight),
                               checkColor: AppColors.bglight,
                               value: loginprovider.isrememeber,
-                              onChanged: (value) => loginprovider.toggleRemember(),
+                              onChanged: (value) =>
+                                  loginprovider.toggleRemember(),
                             ),
-                            const Text("Remember Me", style: TextStyle(color: AppColors.bglight)),
+                            const Text(
+                              "Remember Me",
+                              style: TextStyle(color: AppColors.bglight),
+                            ),
                           ],
                         ),
                         TextButton(
                           onPressed: () {},
-                          child: const Text("Forgot Password?", style: TextStyle(color: AppColors.bglight)),
+                          child: const Text(
+                            "Forgot Password?",
+                            style: TextStyle(color: AppColors.bglight),
+                          ),
                         ),
                       ],
                     ),
@@ -133,12 +156,15 @@ class LoginScreen extends StatelessWidget {
                           foregroundColor: AppColors.bglight,
                           padding: const EdgeInsets.symmetric(vertical: 14),
                         ),
-                        onPressed: loginprovider.isloading ? null : () => loginprovider.login(context),
+                        onPressed: () => loginprovider.login(context),
                         child: loginprovider.isloading
                             ? const SizedBox(
                                 height: 20,
                                 width: 20,
-                                child: CircularProgressIndicator(color: AppColors.bglight, strokeWidth: 2),
+                                child: CircularProgressIndicator(
+                                  color: AppColors.bglight,
+                                  strokeWidth: 2,
+                                ),
                               )
                             : const Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
@@ -157,13 +183,22 @@ class LoginScreen extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        const Text("Dont Have An Account", style: TextStyle(color: AppColors.bglight)),
+                        const Text(
+                          "Dont Have An Account",
+                          style: TextStyle(color: AppColors.bglight),
+                        ),
                         const SizedBox(width: 4),
                         GestureDetector(
-                          onTap: () => Navigator.pushNamed(context, AppRoutes.registerRoute),
+                          onTap: () => Navigator.pushNamed(
+                            context,
+                            AppRoutes.registerRoute,
+                          ),
                           child: const Text(
                             "Register",
-                            style: TextStyle(color: AppColors.primary, fontWeight: FontWeight.bold),
+                            style: TextStyle(
+                              color: AppColors.primary,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                         ),
                       ],
@@ -174,26 +209,45 @@ class LoginScreen extends StatelessWidget {
                     // --- OR DIVIDER ---
                     Row(
                       children: [
-                        Expanded(child: Divider(color: AppColors.bglight.withAlpha(100), thickness: 2)),
+                        Expanded(
+                          child: Divider(
+                            color: AppColors.bglight.withAlpha(100),
+                            thickness: 2,
+                          ),
+                        ),
                         const Padding(
                           padding: EdgeInsets.symmetric(horizontal: 8),
-                          child: Text("OR", style: TextStyle(color: AppColors.bglight)),
+                          child: Text(
+                            "OR",
+                            style: TextStyle(color: AppColors.bglight),
+                          ),
                         ),
-                        Expanded(child: Divider(color: AppColors.bglight.withAlpha(100), thickness: 2)),
+                        Expanded(
+                          child: Divider(
+                            color: AppColors.bglight.withAlpha(100),
+                            thickness: 2,
+                          ),
+                        ),
                       ],
                     ),
 
                     const SizedBox(height: 10),
-                    
+
                     // --- SOCIAL LOGINS ---
                     Row(
                       children: [
                         Expanded(
-                          child: _socialButton("Google", "assets/logo.png"), // Replace with google icon
+                          child: _socialButton(
+                            "Google",
+                            "assets/logo.png",
+                          ), // Replace with google icon
                         ),
                         const SizedBox(width: 20),
                         Expanded(
-                          child: _socialButton("Facebook", "assets/logo.png"), // Replace with fb icon
+                          child: _socialButton(
+                            "Facebook",
+                            "assets/logo.png",
+                          ), // Replace with fb icon
                         ),
                       ],
                     ),

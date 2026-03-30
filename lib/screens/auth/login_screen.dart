@@ -1,3 +1,4 @@
+// login_screen.dart
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:task_management_app/providers/login_provider.dart';
@@ -28,11 +29,9 @@ class LoginScreen extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Image.asset("assets/logo.png", height: 150),
                 const SizedBox(height: 70),
-
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -44,10 +43,9 @@ class LoginScreen extends StatelessWidget {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-
                     const SizedBox(height: 10),
 
-                    // EMAIL
+                    // --- EMAIL ---
                     TextField(
                       style: const TextStyle(color: AppColors.bglight),
                       controller: loginprovider.emailController,
@@ -56,42 +54,20 @@ class LoginScreen extends StatelessWidget {
                         hintText: "Email",
                         hintStyle: const TextStyle(color: AppColors.bglight),
                         filled: true,
+                        // SHOW ERROR HERE
+                        errorText: loginprovider.emailError.isEmpty ? null : loginprovider.emailError,
                         fillColor: AppColors.bglight.withAlpha(25),
-                        prefixIcon: const Icon(
-                          Icons.email_outlined,
-                          color: AppColors.bglight,
-                        ),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(50),
-                          borderSide: BorderSide(
-                            color: AppColors.bglight.withAlpha(100),
-                            width: 2,
-                          ),
-                        ),
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(50),
-                          borderSide: BorderSide(
-                            color: AppColors.bglight.withAlpha(100),
-                            width: 2,
-                          ),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(50),
-                          borderSide: BorderSide(
-                            color: AppColors.bglight.withAlpha(100),
-                            width: 2,
-                          ),
-                        ),
-                        contentPadding: const EdgeInsets.symmetric(
-                          horizontal: 20,
-                          vertical: 14,
-                        ),
+                        prefixIcon: const Icon(Icons.email_outlined, color: AppColors.bglight),
+                        border: _buildBorder(),
+                        enabledBorder: _buildBorder(),
+                        focusedBorder: _buildBorder(),
+                        contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
                       ),
                     ),
 
                     const SizedBox(height: 20),
 
-                    // PASSWORD
+                    // --- PASSWORD ---
                     TextField(
                       controller: loginprovider.passwordController,
                       cursorColor: AppColors.bglight,
@@ -101,13 +77,12 @@ class LoginScreen extends StatelessWidget {
                         hintText: "Password",
                         hintStyle: const TextStyle(color: AppColors.bglight),
                         filled: true,
+                        // SHOW ERROR HERE
+                        errorText: loginprovider.passwordError.isEmpty ? null : loginprovider.passwordError,
                         fillColor: AppColors.bglight.withAlpha(25),
-                        prefixIcon: const Icon(
-                          Icons.lock_outline_rounded,
-                          color: AppColors.bglight,
-                        ),
+                        prefixIcon: const Icon(Icons.lock_outline_rounded, color: AppColors.bglight),
                         suffixIcon: GestureDetector(
-                          onTap: () => loginprovider.isVisiblity(),
+                          onTap: () => loginprovider.toggleVisibility(),
                           child: Icon(
                             loginprovider.isvisbility
                                 ? Icons.visibility_off_outlined
@@ -115,37 +90,16 @@ class LoginScreen extends StatelessWidget {
                             color: AppColors.bglight,
                           ),
                         ),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(50),
-                          borderSide: BorderSide(
-                            color: AppColors.bglight.withAlpha(100),
-                            width: 2,
-                          ),
-                        ),
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(50),
-                          borderSide: BorderSide(
-                            color: AppColors.bglight.withAlpha(100),
-                            width: 2,
-                          ),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(50),
-                          borderSide: BorderSide(
-                            color: AppColors.bglight.withAlpha(100),
-                            width: 2,
-                          ),
-                        ),
-                        contentPadding: const EdgeInsets.symmetric(
-                          horizontal: 20,
-                          vertical: 14,
-                        ),
+                        border: _buildBorder(),
+                        enabledBorder: _buildBorder(),
+                        focusedBorder: _buildBorder(),
+                        contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
                       ),
                     ),
 
                     const SizedBox(height: 5),
 
-                    // REMEMBER + FORGOT
+                    // --- REMEMBER + FORGOT ---
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -153,29 +107,24 @@ class LoginScreen extends StatelessWidget {
                           children: [
                             Checkbox(
                               activeColor: AppColors.primary,
+                              side: const BorderSide(color: AppColors.bglight),
                               checkColor: AppColors.bglight,
                               value: loginprovider.isrememeber,
-                              onChanged: (value) => loginprovider.isRemember(),
+                              onChanged: (value) => loginprovider.toggleRemember(),
                             ),
-                            const Text(
-                              "Remember Me",
-                              style: TextStyle(color: AppColors.bglight),
-                            ),
+                            const Text("Remember Me", style: TextStyle(color: AppColors.bglight)),
                           ],
                         ),
                         TextButton(
                           onPressed: () {},
-                          child: const Text(
-                            "Forgot Password?",
-                            style: TextStyle(color: AppColors.bglight),
-                          ),
+                          child: const Text("Forgot Password?", style: TextStyle(color: AppColors.bglight)),
                         ),
                       ],
                     ),
 
                     const SizedBox(height: 30),
 
-                    // LOGIN BUTTON
+                    // --- LOGIN BUTTON ---
                     SizedBox(
                       width: double.infinity,
                       child: ElevatedButton(
@@ -184,40 +133,37 @@ class LoginScreen extends StatelessWidget {
                           foregroundColor: AppColors.bglight,
                           padding: const EdgeInsets.symmetric(vertical: 14),
                         ),
-                        onPressed: () {},
-                        child: const Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text("Login"),
-                            SizedBox(width: 7),
-                            Icon(Icons.arrow_forward),
-                          ],
-                        ),
+                        onPressed: loginprovider.isloading ? null : () => loginprovider.login(context),
+                        child: loginprovider.isloading
+                            ? const SizedBox(
+                                height: 20,
+                                width: 20,
+                                child: CircularProgressIndicator(color: AppColors.bglight, strokeWidth: 2),
+                              )
+                            : const Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text("Login"),
+                                  SizedBox(width: 7),
+                                  Icon(Icons.arrow_forward),
+                                ],
+                              ),
                       ),
                     ),
 
                     const SizedBox(height: 20),
 
-                    // REGISTER LINK
+                    // --- REGISTER LINK ---
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        const Text(
-                          "Dont Have An Account",
-                          style: TextStyle(color: AppColors.bglight),
-                        ),
+                        const Text("Dont Have An Account", style: TextStyle(color: AppColors.bglight)),
                         const SizedBox(width: 4),
                         GestureDetector(
-                          onTap: () => Navigator.pushNamed(
-                            context,
-                            AppRoutes.registerRoute,
-                          ),
+                          onTap: () => Navigator.pushNamed(context, AppRoutes.registerRoute),
                           child: const Text(
                             "Register",
-                            style: TextStyle(
-                              color: AppColors.primary,
-                              fontWeight: FontWeight.bold,
-                            ),
+                            style: TextStyle(color: AppColors.primary, fontWeight: FontWeight.bold),
                           ),
                         ),
                       ],
@@ -225,57 +171,29 @@ class LoginScreen extends StatelessWidget {
 
                     const SizedBox(height: 15),
 
-                    // OR DIVIDER
+                    // --- OR DIVIDER ---
                     Row(
                       children: [
-                        Expanded(
-                          child: Divider(
-                            color: AppColors.bglight.withAlpha(100),
-                            thickness: 2,
-                          ),
+                        Expanded(child: Divider(color: AppColors.bglight.withAlpha(100), thickness: 2)),
+                        const Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 8),
+                          child: Text("OR", style: TextStyle(color: AppColors.bglight)),
                         ),
-                        const SizedBox(width: 4),
-                        const Text(
-                          "OR",
-                          style: TextStyle(color: AppColors.bglight),
-                        ),
-                        const SizedBox(width: 4),
-                        Expanded(
-                          child: Divider(
-                            color: AppColors.bglight.withAlpha(100),
-                            thickness: 2,
-                          ),
-                        ),
+                        Expanded(child: Divider(color: AppColors.bglight.withAlpha(100), thickness: 2)),
                       ],
                     ),
 
                     const SizedBox(height: 10),
+                    
+                    // --- SOCIAL LOGINS ---
                     Row(
                       children: [
                         Expanded(
-                          child: ElevatedButton.icon(
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: AppColors.bglight,
-                              foregroundColor: AppColors.primary,
-                              padding: const EdgeInsets.symmetric(vertical: 14),
-                            ),
-                            onPressed: () {},
-                            icon: Image.asset("assets/logo.png", height: 20),
-                            label: const Text("Google"),
-                          ),
+                          child: _socialButton("Google", "assets/logo.png"), // Replace with google icon
                         ),
                         const SizedBox(width: 20),
                         Expanded(
-                          child: ElevatedButton.icon(
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: AppColors.bglight,
-                              foregroundColor: AppColors.primary,
-                              padding: const EdgeInsets.symmetric(vertical: 14),
-                            ),
-                            onPressed: () {},
-                            icon: Image.asset("assets/logo.png", height: 20),
-                            label: const Text("Facebook"),
-                          ),
+                          child: _socialButton("Facebook", "assets/logo.png"), // Replace with fb icon
                         ),
                       ],
                     ),
@@ -286,6 +204,26 @@ class LoginScreen extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+
+  OutlineInputBorder _buildBorder() {
+    return OutlineInputBorder(
+      borderRadius: BorderRadius.circular(50),
+      borderSide: BorderSide(color: AppColors.bglight.withAlpha(100), width: 2),
+    );
+  }
+
+  Widget _socialButton(String label, String asset) {
+    return ElevatedButton.icon(
+      style: ElevatedButton.styleFrom(
+        backgroundColor: AppColors.bglight,
+        foregroundColor: AppColors.primary,
+        padding: const EdgeInsets.symmetric(vertical: 14),
+      ),
+      onPressed: () {},
+      icon: Image.asset(asset, height: 20),
+      label: Text(label),
     );
   }
 }

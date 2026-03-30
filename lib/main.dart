@@ -4,8 +4,14 @@ import 'package:task_management_app/providers/login_provider.dart';
 import 'package:task_management_app/providers/register_provider.dart';
 import 'package:task_management_app/providers/splash_provider.dart';
 import 'package:task_management_app/utils/app_routes.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
-void main() {
+
+Future<void> main() async {
+  await Supabase.initialize(
+    url: 'https://jpzfbtipieksnwwtqdgn.supabase.co',
+    anonKey: 'sb_publishable_Y0KuXNF5kz8aESxEq0VbFA_gT_valaq',
+  );
   runApp(
     MultiProvider(
       providers: [

@@ -10,6 +10,7 @@ class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final loginprovider = Provider.of<LoginProvider>(context);
+
     return Scaffold(
       body: SingleChildScrollView(
         child: Container(
@@ -19,7 +20,7 @@ class LoginScreen extends StatelessWidget {
             gradient: LinearGradient(
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter,
-              stops: [0.1, 0.5],
+              stops: [0.0, 0.5],
               colors: [AppColors.primary, AppColors.secondry],
             ),
           ),
@@ -28,57 +29,57 @@ class LoginScreen extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
-
               children: [
                 Image.asset("assets/logo.png", height: 150),
-                SizedBox(height: 70),
+                const SizedBox(height: 70),
+
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const Text(
                       "Login",
                       style: TextStyle(
-                        color: Colors.white,
+                        color: AppColors.bglight,
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    SizedBox(height: 10),
+
+                    const SizedBox(height: 10),
+
+                    // EMAIL
                     TextField(
-                      style: TextStyle(color: AppColors.bglight),
+                      style: const TextStyle(color: AppColors.bglight),
                       controller: loginprovider.emailController,
                       cursorColor: AppColors.bglight,
                       decoration: InputDecoration(
                         hintText: "Email",
-                        hintStyle: TextStyle(color: AppColors.bglight),
+                        hintStyle: const TextStyle(color: AppColors.bglight),
                         filled: true,
                         fillColor: AppColors.bglight.withAlpha(25),
-                        prefixIcon: Icon(
+                        prefixIcon: const Icon(
                           Icons.email_outlined,
                           color: AppColors.bglight,
                         ),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(50),
                           borderSide: BorderSide(
-                            color: AppColors.info,
+                            color: AppColors.bglight.withAlpha(100),
                             width: 2,
-                            style: BorderStyle.solid,
                           ),
                         ),
                         enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(50),
                           borderSide: BorderSide(
-                            color: AppColors.info,
+                            color: AppColors.bglight.withAlpha(100),
                             width: 2,
-                            style: BorderStyle.solid,
                           ),
                         ),
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(50),
                           borderSide: BorderSide(
-                            color: AppColors.info,
+                            color: AppColors.bglight.withAlpha(100),
                             width: 2,
-                            style: BorderStyle.solid,
                           ),
                         ),
                         contentPadding: const EdgeInsets.symmetric(
@@ -90,14 +91,15 @@ class LoginScreen extends StatelessWidget {
 
                     const SizedBox(height: 20),
 
+                    // PASSWORD
                     TextField(
                       controller: loginprovider.passwordController,
                       cursorColor: AppColors.bglight,
                       obscureText: loginprovider.isvisbility,
-                      style: TextStyle(color: AppColors.bglight),
+                      style: const TextStyle(color: AppColors.bglight),
                       decoration: InputDecoration(
                         hintText: "Password",
-                        hintStyle: TextStyle(color: AppColors.bglight),
+                        hintStyle: const TextStyle(color: AppColors.bglight),
                         filled: true,
                         fillColor: AppColors.bglight.withAlpha(25),
                         prefixIcon: const Icon(
@@ -116,35 +118,34 @@ class LoginScreen extends StatelessWidget {
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(50),
                           borderSide: BorderSide(
-                            color: AppColors.info,
+                            color: AppColors.bglight.withAlpha(100),
                             width: 2,
-                            style: BorderStyle.solid,
                           ),
                         ),
                         enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(50),
                           borderSide: BorderSide(
-                            color: AppColors.info,
+                            color: AppColors.bglight.withAlpha(100),
                             width: 2,
-                            style: BorderStyle.solid,
                           ),
                         ),
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(50),
                           borderSide: BorderSide(
-                            color: AppColors.info,
+                            color: AppColors.bglight.withAlpha(100),
                             width: 2,
-                            style: BorderStyle.solid,
                           ),
                         ),
-
                         contentPadding: const EdgeInsets.symmetric(
                           horizontal: 20,
                           vertical: 14,
                         ),
                       ),
                     ),
+
                     const SizedBox(height: 5),
+
+                    // REMEMBER + FORGOT
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -152,10 +153,11 @@ class LoginScreen extends StatelessWidget {
                           children: [
                             Checkbox(
                               activeColor: AppColors.primary,
+                              checkColor: AppColors.bglight,
                               value: loginprovider.isrememeber,
                               onChanged: (value) => loginprovider.isRemember(),
                             ),
-                            Text(
+                            const Text(
                               "Remember Me",
                               style: TextStyle(color: AppColors.bglight),
                             ),
@@ -163,15 +165,17 @@ class LoginScreen extends StatelessWidget {
                         ),
                         TextButton(
                           onPressed: () {},
-                          child: Text(
+                          child: const Text(
                             "Forgot Password?",
                             style: TextStyle(color: AppColors.bglight),
                           ),
                         ),
                       ],
                     ),
+
                     const SizedBox(height: 30),
 
+                    // LOGIN BUTTON
                     SizedBox(
                       width: double.infinity,
                       child: ElevatedButton(
@@ -191,35 +195,88 @@ class LoginScreen extends StatelessWidget {
                         ),
                       ),
                     ),
-                    SizedBox(height: 20),
+
+                    const SizedBox(height: 20),
+
+                    // REGISTER LINK
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text(
+                        const Text(
                           "Dont Have An Account",
-                          style: TextStyle(color: Colors.white),
+                          style: TextStyle(color: AppColors.bglight),
                         ),
-                        SizedBox(width: 4),
+                        const SizedBox(width: 4),
                         GestureDetector(
                           onTap: () => Navigator.pushNamed(
                             context,
                             AppRoutes.registerRoute,
                           ),
-                          child: Text(
+                          child: const Text(
                             "Register",
-                            style: TextStyle(color: AppColors.primary),
+                            style: TextStyle(
+                              color: AppColors.primary,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                         ),
                       ],
                     ),
-                    SizedBox(height: 20),
+
+                    const SizedBox(height: 15),
+
+                    // OR DIVIDER
                     Row(
                       children: [
-                        Expanded(child: Divider()),
-                        SizedBox(width: 4),
-                        Text("OR", style: TextStyle(color: AppColors.bglight)),
-                        SizedBox(width: 4),
-                        Expanded(child: Divider()),
+                        Expanded(
+                          child: Divider(
+                            color: AppColors.bglight.withAlpha(100),
+                            thickness: 2,
+                          ),
+                        ),
+                        const SizedBox(width: 4),
+                        const Text(
+                          "OR",
+                          style: TextStyle(color: AppColors.bglight),
+                        ),
+                        const SizedBox(width: 4),
+                        Expanded(
+                          child: Divider(
+                            color: AppColors.bglight.withAlpha(100),
+                            thickness: 2,
+                          ),
+                        ),
+                      ],
+                    ),
+
+                    const SizedBox(height: 10),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: ElevatedButton.icon(
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: AppColors.bglight,
+                              foregroundColor: AppColors.primary,
+                              padding: const EdgeInsets.symmetric(vertical: 14),
+                            ),
+                            onPressed: () {},
+                            icon: Image.asset("assets/logo.png", height: 20),
+                            label: const Text("Google"),
+                          ),
+                        ),
+                        const SizedBox(width: 20),
+                        Expanded(
+                          child: ElevatedButton.icon(
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: AppColors.bglight,
+                              foregroundColor: AppColors.primary,
+                              padding: const EdgeInsets.symmetric(vertical: 14),
+                            ),
+                            onPressed: () {},
+                            icon: Image.asset("assets/logo.png", height: 20),
+                            label: const Text("Facebook"),
+                          ),
+                        ),
                       ],
                     ),
                   ],

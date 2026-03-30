@@ -13,7 +13,7 @@ class RegisterScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        backgroundColor: AppColors.primary,
+        backgroundColor: AppColors.primary.withAlpha(100),
         title: IconButton(
           onPressed: () => Navigator.pop(context),
           icon: Icon(Icons.arrow_back_ios, color: AppColors.bglight),
@@ -36,7 +36,7 @@ class RegisterScreen extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
-        
+
               children: [
                 Image.asset("assets/logo.png", height: 150),
                 SizedBox(height: 70),
@@ -59,7 +59,7 @@ class RegisterScreen extends StatelessWidget {
                       decoration: InputDecoration(
                         hintText: "Username",
                         hintStyle: TextStyle(color: AppColors.bglight),
-        
+
                         filled: true,
                         fillColor: Colors.white.withAlpha(25),
                         prefixIcon: Icon(
@@ -96,7 +96,7 @@ class RegisterScreen extends StatelessWidget {
                         ),
                       ),
                     ),
-        
+
                     const SizedBox(height: 20),
                     TextField(
                       controller: registerprovider.emailController,
@@ -105,7 +105,7 @@ class RegisterScreen extends StatelessWidget {
                       decoration: InputDecoration(
                         hintText: "Email",
                         hintStyle: TextStyle(color: AppColors.bglight),
-        
+
                         filled: true,
                         fillColor: AppColors.bglight.withAlpha(25),
                         prefixIcon: Icon(
@@ -142,15 +142,15 @@ class RegisterScreen extends StatelessWidget {
                         ),
                       ),
                     ),
-        
+
                     const SizedBox(height: 20),
-        
+
                     TextField(
                       controller: registerprovider.passwordController,
                       cursorColor: AppColors.bglight,
                       obscureText: registerprovider.isvisbility,
                       style: TextStyle(color: AppColors.bglight),
-        
+
                       decoration: InputDecoration(
                         hintText: "Password",
                         hintStyle: TextStyle(color: AppColors.bglight),
@@ -193,7 +193,7 @@ class RegisterScreen extends StatelessWidget {
                             style: BorderStyle.solid,
                           ),
                         ),
-        
+
                         contentPadding: const EdgeInsets.symmetric(
                           horizontal: 20,
                           vertical: 14,
@@ -209,7 +209,7 @@ class RegisterScreen extends StatelessWidget {
                       decoration: InputDecoration(
                         hintText: "Confirm Password",
                         hintStyle: TextStyle(color: AppColors.bglight),
-        
+
                         filled: true,
                         fillColor: AppColors.bglight.withAlpha(25),
                         prefixIcon: const Icon(
@@ -249,7 +249,7 @@ class RegisterScreen extends StatelessWidget {
                             style: BorderStyle.solid,
                           ),
                         ),
-        
+
                         contentPadding: const EdgeInsets.symmetric(
                           horizontal: 20,
                           vertical: 14,
@@ -257,7 +257,7 @@ class RegisterScreen extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 30),
-        
+
                     SizedBox(
                       width: double.infinity,
                       child: ElevatedButton(
@@ -287,8 +287,10 @@ class RegisterScreen extends StatelessWidget {
                         ),
                         SizedBox(width: 4),
                         GestureDetector(
-                          onTap: () =>
-                              Navigator.pushNamed(context, AppRoutes.loginRoute),
+                          onTap: () => Navigator.pushNamed(
+                            context,
+                            AppRoutes.loginRoute,
+                          ),
                           child: Text(
                             "Login",
                             style: TextStyle(color: AppColors.primary),

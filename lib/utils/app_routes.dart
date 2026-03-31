@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:task_management_app/screens/app_main_screen.dart';
 import 'package:task_management_app/screens/auth/login_screen.dart';
 import 'package:task_management_app/screens/auth/register_screen.dart';
 import 'package:task_management_app/screens/auth/splash_screen.dart';
-import 'package:task_management_app/screens/home_screen.dart';
 
 class AppRoutes {
   static const String splashRoute = "/";
@@ -15,6 +15,6 @@ class AppRoutes {
     splashRoute: (_) => SplashScreen(),
     loginRoute: (_) => LoginScreen(),
     registerRoute: (_) => RegisterScreen(),
-    appmainRoute: (_) => HomeScreen(),
+    appmainRoute: (_) => AppMainScreen(),
   };
 }

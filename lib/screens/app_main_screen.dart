@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:task_management_app/screens/home_screen.dart';
+import 'package:task_management_app/screens/profile_screen.dart';
+import 'package:task_management_app/screens/task_screen.dart';
+import 'package:task_management_app/utils/app_colors.dart';
 
 class AppMainScreen extends StatefulWidget {
   const AppMainScreen({super.key});
@@ -11,7 +14,11 @@ class AppMainScreen extends StatefulWidget {
 class _AppMainScreenState extends State<AppMainScreen> {
   int _currentIndex = 0;
 
-  final List<Widget> _screens = [HomeScreen()];
+  final List<Widget> _screens = [
+    const HomeScreen(),
+    const TaskScreen(),
+    const ProfilePage(),
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +27,14 @@ class _AppMainScreenState extends State<AppMainScreen> {
 
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _currentIndex,
+        backgroundColor: AppColors.primary,
+        selectedItemColor: AppColors.bglight,
 
+        unselectedItemColor: AppColors.bglight.withAlpha(150),
+        type: BottomNavigationBarType.fixed,
+        selectedFontSize: 14,
+        unselectedFontSize: 12,
+        selectedIconTheme: const IconThemeData(size: 28),
         onTap: (index) {
           setState(() {
             _currentIndex = index;
@@ -28,11 +42,17 @@ class _AppMainScreenState extends State<AppMainScreen> {
         },
 
         items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
-          BottomNavigationBarItem(icon: Icon(Icons.task), label: "Tasks"),
           BottomNavigationBarItem(
-            icon: Icon(Icons.settings),
-            label: "Settings",
+            icon: Icon(Icons.home_outlined),
+            label: "Home",
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.task_outlined),
+            label: "Tasks",
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.person_outline_rounded),
+            label: "Profile",
           ),
         ],
       ),

@@ -18,6 +18,13 @@ class HomeScreen extends StatelessWidget {
             fontStyle: FontStyle.italic,
           ),
         ),
+        actions: [
+          IconButton(
+            onPressed: () {},
+            icon: const Icon(Icons.settings),
+            color: AppColors.bglight,
+          ),
+        ],
         backgroundColor: AppColors.primary,
       ),
       body: Padding(
@@ -61,6 +68,27 @@ class HomeScreen extends StatelessWidget {
                                 borderRadius: BorderRadius.circular(10),
                                 color: AppColors.info.withAlpha(25),
                               ),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    "10",
+                                    style: TextStyle(
+                                      fontSize: 18,
+                                      color: AppColors.info,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  const SizedBox(height: 5),
+                                  Text(
+                                    "Completed Tasks",
+                                    style: TextStyle(
+                                      fontSize: 14,
+                                      color: AppColors.info,
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
                           const SizedBox(width: 10),
@@ -70,6 +98,27 @@ class HomeScreen extends StatelessWidget {
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(10),
                                 color: AppColors.info.withAlpha(25),
+                              ),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    "5",
+                                    style: TextStyle(
+                                      fontSize: 18,
+                                      color: AppColors.info,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  const SizedBox(height: 5),
+                                  Text(
+                                    "Pending Tasks",
+                                    style: TextStyle(
+                                      fontSize: 14,
+                                      color: AppColors.info,
+                                    ),
+                                  ),
+                                ],
                               ),
                             ),
                           ),

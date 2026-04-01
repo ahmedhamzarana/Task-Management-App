@@ -30,10 +30,8 @@ class LoginProvider extends ChangeNotifier {
   // Load saved data if "Remember Me" was used last time
   Future<void> loadRememberedCredentials() async {
     String? savedEmail = await storage.read(key: "email");
-    String? savedPass = await storage.read(key: "password");
-    if (savedEmail != null && savedPass != null) {
+    if (savedEmail != null) {
       emailController.text = savedEmail;
-      passwordController.text = savedPass;
       isrememeber = true;
       notifyListeners();
     }
@@ -75,19 +73,19 @@ class LoginProvider extends ChangeNotifier {
 
       // Handle Secure Storage
       if (isrememeber == true) {
-        await storage.write(key: "email", value: emailController.text.trim());
         await storage.write(
-          key: "password",
-          value: passwordController.text.trim(),
+          key: "useremail",
+          value: emailController.text.trim(),
         );
       } else {
-        await storage.delete(key: "email");
-        await storage.delete(key: "password");
+        await storage.delete(key: "useremail");
       }
 
       if (context.mounted) {
         emailController.clear();
         passwordController.clear();
+        isrememeber = false;
+        notifyListeners();
         Navigator.pushReplacementNamed(context, AppRoutes.appmainRoute);
       }
     } on AuthException catch (e) {

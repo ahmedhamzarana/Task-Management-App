@@ -1,4 +1,3 @@
-// register_provider.dart
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import '../utils/app_routes.dart';
@@ -26,7 +25,6 @@ class RegisterProvider extends ChangeNotifier {
 
   bool validateForm() {
     bool isValid = true;
-
     if (usernameController.text.trim().isEmpty) {
       usernameError = "Username required";
       isValid = false;
@@ -34,30 +32,22 @@ class RegisterProvider extends ChangeNotifier {
       usernameError = "";
     }
 
-    if (emailController.text.trim().isEmpty) {
-      emailError = "Email required";
-      isValid = false;
-    } else if (!emailController.text.contains("@")) {
-      emailError = "Invalid email format";
+    if (emailController.text.trim().isEmpty ||
+        !emailController.text.contains("@")) {
+      emailError = "Valid email required";
       isValid = false;
     } else {
       emailError = "";
     }
 
-    if (passwordController.text.isEmpty) {
-      passwordError = "Password required";
-      isValid = false;
-    } else if (passwordController.text.length < 6) {
+    if (passwordController.text.length < 6) {
       passwordError = "Min 6 characters";
       isValid = false;
     } else {
       passwordError = "";
     }
 
-    if (confirmPasswordController.text.isEmpty) {
-      confirmPasswordError = "Confirm password required";
-      isValid = false;
-    } else if (passwordController.text != confirmPasswordController.text) {
+    if (passwordController.text != confirmPasswordController.text) {
       confirmPasswordError = "Passwords do not match";
       isValid = false;
     } else {
@@ -75,44 +65,50 @@ class RegisterProvider extends ChangeNotifier {
     notifyListeners();
 
     try {
-      final response = await supabase.auth.signUp(
+      // 1. Create User in Supabase Auth
+      final AuthResponse res = await supabase.auth.signUp(
         email: emailController.text.trim(),
         password: passwordController.text.trim(),
       );
 
-      final user = response.user;
-      if (user == null) throw Exception("Signup failed");
+      final user = res.user;
 
-      await supabase.from("tbl_users").insert({
-        "id": user.id,
-        "username": usernameController.text.trim(),
-        "email": emailController.text.trim(),
-      });
+      if (user != null) {
+        // 2. Insert into your custom table
+        // IMPORTANT: Ensure RLS policies in Supabase allow this insert!
+        await supabase.from('tbl_users').insert({
+          'user_id': user.id,
+          'name': usernameController.text.trim(),
+          'email': emailController.text.trim(),
+          'created_at': DateTime.now().toIso8601String(),
+        });
 
-      if (context.mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text("Registration successful"),
-            backgroundColor: Colors.green,
-          ),
-        );
-        Navigator.pushReplacementNamed(context, AppRoutes.loginRoute);
+        if (context.mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text("Registration Successful!"),
+              backgroundColor: Colors.green,
+            ),
+          );
+          Navigator.pushReplacementNamed(context, AppRoutes.loginRoute);
+        }
       }
     } on AuthException catch (e) {
-      if (context.mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(e.message), backgroundColor: Colors.red),
-        );
-      }
+      _showError(context, e.message);
     } catch (e) {
-      if (context.mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text("Error: $e"), backgroundColor: Colors.red),
-        );
-      }
+      _showError(context, "Database Error: Make sure RLS policies are set.");
+      debugPrint("Detailed Error: $e");
     } finally {
       isLoading = false;
       notifyListeners();
+    }
+  }
+
+  void _showError(BuildContext context, String message) {
+    if (context.mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(message), backgroundColor: Colors.red),
+      );
     }
   }
 

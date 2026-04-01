@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:task_management_app/providers/login_provider.dart';
+import 'package:task_management_app/providers/profile_provider.dart';
 import 'package:task_management_app/providers/register_provider.dart';
 import 'package:task_management_app/providers/splash_provider.dart';
 import 'package:task_management_app/utils/app_routes.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-
 
 Future<void> main() async {
   await Supabase.initialize(
@@ -18,6 +18,7 @@ Future<void> main() async {
         ChangeNotifierProvider(create: (context) => SplashProvider()),
         ChangeNotifierProvider(create: (context) => LoginProvider()),
         ChangeNotifierProvider(create: (context) => RegisterProvider()),
+        ChangeNotifierProvider(create: (context) => ProfileProvider()),
       ],
       child: const MyApp(),
     ),

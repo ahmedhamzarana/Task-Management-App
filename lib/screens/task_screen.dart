@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:task_management_app/utils/app_colors.dart';
+import 'package:task_management_app/widgets/custom_input.dart';
 
 class TaskScreen extends StatelessWidget {
   const TaskScreen({super.key});
@@ -27,20 +28,13 @@ class TaskScreen extends StatelessWidget {
           height: MediaQuery.of(context).size.height,
           color: AppColors.bglight,
           child: Column(children: [
-              TextField(
-                decoration: InputDecoration(
-                  hintText: "Search tasks...",
-                  prefixIcon: const Icon(Icons.search),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(20),
-                    borderSide: BorderSide.none,
-                  ),
-                  filled: true,
-                  fillColor: Colors.white,
-                ),  
-              )
-            ],
-          ),
+            CustomInput(controller: TextEditingController(), hintText: "Title"),
+            CustomInput(controller: TextEditingController(), hintText: "Description"),
+            CustomInput(controller: TextEditingController(), hintText: "Due Date"),
+            CustomInput(controller: TextEditingController(), hintText: "Time"),
+            CustomInput(controller: TextEditingController(), hintText: "Priority"),
+            CustomInput(controller: TextEditingController(), hintText: "Status"),
+          ]),
         ),
       ),
     );

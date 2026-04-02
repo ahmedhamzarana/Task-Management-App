@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class AppColors {
   // Primary Colors
   static const Color bglight = Colors.white;
-  static const Color primary = Color.fromARGB(255, 174, 52, 15);
+  static const Color primary = Color.fromARGB(255, 224, 68, 6);
   static const Color secondry = Colors.black;
 
   // Status Colors
@@ -11,19 +11,19 @@ class AppColors {
   static const Color success = Colors.green;
   static const Color danger = Colors.red;
 
-  // Extended Colors with withAlpha variations
-  static Color primaryLight = AppColors.primary.withAlpha(50);
-  static Color primaryMedium = AppColors.primary.withAlpha(100);
-  static Color primaryDark = AppColors.primary.withAlpha(200);
+  // Extended Colors - use const where possible
+  static const Color primaryLight = Color.fromARGB(50, 224, 68, 6);
+  static const Color primaryMedium = Color.fromARGB(100, 224, 68, 6);
+  static const Color primaryDark = Color.fromARGB(200, 224, 68, 6);
 
-  static Color successLight = AppColors.success.withAlpha(50);
-  static Color successMedium = AppColors.success.withAlpha(100);
+  static const Color successLight = Color.fromARGB(50, 76, 175, 80);
+  static const Color successMedium = Color.fromARGB(100, 76, 175, 80);
 
-  static Color dangerLight = AppColors.danger.withAlpha(50);
-  static Color dangerMedium = AppColors.danger.withAlpha(100);
+  static const Color dangerLight = Color.fromARGB(50, 244, 67, 54);
+  static const Color dangerMedium = Color.fromARGB(100, 244, 67, 54);
 
-  static Color infoLight = AppColors.info.withAlpha(30);
-  static Color infoMedium = AppColors.info.withAlpha(80);
+  static const Color infoLight = Color.fromARGB(30, 158, 158, 158);
+  static const Color infoMedium = Color.fromARGB(80, 158, 158, 158);
 
   // Additional utility colors
   static const Color divider = Color.fromARGB(255, 230, 230, 230);

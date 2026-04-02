@@ -11,7 +11,7 @@ class LoginProvider extends ChangeNotifier {
   final supabase = Supabase.instance.client;
 
   bool isloading = false;
-  bool isvisbility = false;
+  bool isvisbility = true;
   bool isrememeber = false;
 
   String emailError = "";
@@ -66,6 +66,8 @@ class LoginProvider extends ChangeNotifier {
     notifyListeners();
 
     try {
+      emailError = "";
+      passwordError = "";
       await supabase.auth.signInWithPassword(
         email: emailController.text.trim(),
         password: passwordController.text.trim(),

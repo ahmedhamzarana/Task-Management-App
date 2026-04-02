@@ -135,8 +135,11 @@ class LoginScreen extends StatelessWidget {
                             ),
                           ],
                         ),
-                        TextButton(
-                          onPressed: () {},
+                        GestureDetector(
+                          onTap: () => Navigator.pushNamed(
+                            context,
+                            AppRoutes.forgotPasswordRoute,
+                          ),
                           child: const Text(
                             "Forgot Password?",
                             style: TextStyle(color: AppColors.bglight),
@@ -239,14 +242,14 @@ class LoginScreen extends StatelessWidget {
                         Expanded(
                           child: _socialButton(
                             "Google",
-                            "assets/logo.png",
+                            "assets/google_icon.png",
                           ), // Replace with google icon
                         ),
                         const SizedBox(width: 20),
                         Expanded(
                           child: _socialButton(
                             "Facebook",
-                            "assets/logo.png",
+                            "assets/facebook_icon.png",
                           ), // Replace with fb icon
                         ),
                       ],
@@ -271,8 +274,9 @@ class LoginScreen extends StatelessWidget {
   Widget _socialButton(String label, String asset) {
     return ElevatedButton.icon(
       style: ElevatedButton.styleFrom(
-        backgroundColor: AppColors.bglight,
+        backgroundColor: AppColors.bglight.withAlpha(25),
         foregroundColor: AppColors.primary,
+        side: BorderSide(color: AppColors.bglight.withAlpha(100)),
         padding: const EdgeInsets.symmetric(vertical: 14),
       ),
       onPressed: () {},

@@ -32,6 +32,7 @@ class HomeScreen extends StatelessWidget {
         child: Container(
           width: MediaQuery.of(context).size.width,
           height: MediaQuery.of(context).size.height,
+          color: AppColors.bglight,
           child: Column(
             children: [
               Container(
@@ -80,7 +81,7 @@ class HomeScreen extends StatelessWidget {
                                     ),
                                   ),
                                   const SizedBox(height: 5),
-                                  Text(
+                                  const Text(
                                     "Completed Tasks",
                                     style: TextStyle(
                                       fontSize: 14,

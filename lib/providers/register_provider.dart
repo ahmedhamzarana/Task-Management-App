@@ -94,9 +94,13 @@ class RegisterProvider extends ChangeNotifier {
         }
       }
     } on AuthException catch (e) {
-      _showError(context, e.message);
+      if (context.mounted) {
+        _showError(context, e.message);
+      }
     } catch (e) {
-      _showError(context, "Database Error: Make sure RLS policies are set.");
+      if (context.mounted) {
+        _showError(context, "Database Error: Make sure RLS policies are set.");
+      }
       debugPrint("Detailed Error: $e");
     } finally {
       isLoading = false;
@@ -119,5 +123,12 @@ class RegisterProvider extends ChangeNotifier {
     passwordController.dispose();
     confirmPasswordController.dispose();
     super.dispose();
+  }
+
+  void clearControllers() {
+    usernameController.clear();
+    emailController.clear();
+    passwordController.clear();
+    confirmPasswordController.clear();
   }
 }

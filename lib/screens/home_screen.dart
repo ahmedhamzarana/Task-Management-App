@@ -1,11 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:task_management_app/utils/app_colors.dart';
+import 'package:task_management_app/providers/profile_provider.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final profileProvider = Provider.of<ProfileProvider>(context);
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      profileProvider.fetchUserProfile();
+    });
     return Scaffold(
       backgroundColor: AppColors.bglight,
       appBar: AppBar(
@@ -53,7 +59,7 @@ class HomeScreen extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "Hi, User",
+                        "Hi, ${profileProvider.userName ?? "User"}!",
                         style: TextStyle(
                           fontSize: 20,
                           color: AppColors.bglight,

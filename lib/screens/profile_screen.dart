@@ -35,22 +35,32 @@ class _ProfileScreenState extends State<ProfileScreen> {
         automaticallyImplyLeading: false,
         elevation: 0,
         backgroundColor: AppColors.primary,
-        title: const Text(
-          "Profile Details",
-          style: TextStyle(
-            color: Colors.white,
-            fontWeight: FontWeight.bold,
-            fontSize: 22,
-          ),
+        title: Row(
+          children: [
+            GestureDetector(
+              onTap: () => Navigator.pop(context),
+              child: const Icon(Icons.arrow_back_ios, color: Colors.white),
+            ),
+            const SizedBox(width: 10),
+            const Text(
+              "Profile",
+              style: TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+                fontSize: 20,
+                fontStyle: FontStyle.italic,
+              ),
+            ),
+          ],
         ),
         actions: [
           IconButton(
-            icon: const Icon(Icons.edit_outlined, color: Colors.white),
+            icon: const Icon(Icons.settings, color: Colors.white),
             onPressed: () {},
           ),
         ],
       ),
-      body: SingleChildScrollView(   
+      body: SingleChildScrollView(
         child: Column(
           children: [
             Container(
@@ -140,17 +150,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       color: AppColors.secondry,
                     ),
                   ),
-                  const SizedBox(height: 16),
-                  _buildInfoTile(
-                    Icons.email_outlined,
-                    "Email",
-                    profileProvider.userEmail ?? "N/A",
-                  ),
                   const SizedBox(height: 12),
                   _buildInfoTile(
                     Icons.person_outline,
                     "Name",
                     profileProvider.userName ?? "N/A",
+                  ),
+                  const SizedBox(height: 16),
+                  _buildInfoTile(
+                    Icons.email_outlined,
+                    "Email",
+                    profileProvider.userEmail ?? "N/A",
                   ),
                 ],
               ),

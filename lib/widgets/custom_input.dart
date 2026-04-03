@@ -9,6 +9,7 @@ class CustomInput extends StatelessWidget {
     this.prefixIcon,
     this.suffixIcon,
     this.errorText,
+    this.maxLines = 1,
   });
 
   final TextEditingController controller;
@@ -16,12 +17,14 @@ class CustomInput extends StatelessWidget {
   final Widget? prefixIcon;
   final Widget? suffixIcon;
   final String? errorText;
+  final int maxLines;
 
   @override
   Widget build(BuildContext context) {
     return TextField(
       controller: controller,
       cursorColor: AppColors.primary,
+      maxLines: maxLines,
       decoration: InputDecoration(
         hintText: hintText,
         hintStyle: const TextStyle(color: AppColors.primary),

@@ -4,17 +4,29 @@ import 'package:task_management_app/providers/add_task_provider.dart';
 import 'package:task_management_app/utils/app_colors.dart';
 import 'package:task_management_app/providers/profile_provider.dart';
 import 'package:task_management_app/utils/app_routes.dart';
+import 'package:task_management_app/widgets/task_card.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  @override
+  void initState() {
+    super.initState();
+    // This runs ONLY ONCE when the widget is created
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Provider.of<ProfileProvider>(context, listen: false).fetchUserProfile();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     final profileProvider = Provider.of<ProfileProvider>(context);
     final taskProvider = Provider.of<AddTaskProvider>(context);
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      profileProvider.fetchUserProfile();
-    });
     return Scaffold(
       backgroundColor: AppColors.bglight,
       appBar: AppBar(
@@ -90,7 +102,45 @@ class HomeScreen extends StatelessWidget {
                               height: 70,
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(10),
+                                color: AppColors.success.withAlpha(25),
+                                border: Border.all(
+                                  color: AppColors.success.withAlpha(60),
+                                ),
+                              ),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    "10",
+                                    style: TextStyle(
+                                      fontSize: 18,
+                                      color: AppColors.success,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  const SizedBox(height: 5),
+                                  const Text(
+                                    "All Tasks",
+                                    style: TextStyle(
+                                      fontSize: 14,
+                                      color: AppColors.success,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                          const SizedBox(width: 10),
+
+                          Expanded(
+                            child: Container(
+                              height: 70,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
                                 color: AppColors.info.withAlpha(25),
+                                border: Border.all(
+                                  color: AppColors.info.withAlpha(60),
+                                ),
                               ),
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
@@ -121,7 +171,10 @@ class HomeScreen extends StatelessWidget {
                               height: 70,
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(10),
-                                color: AppColors.info.withAlpha(25),
+                                color: AppColors.danger.withAlpha(25),
+                                border: Border.all(
+                                  color: AppColors.danger.withAlpha(60),
+                                ),
                               ),
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
@@ -130,7 +183,7 @@ class HomeScreen extends StatelessWidget {
                                     "5",
                                     style: TextStyle(
                                       fontSize: 18,
-                                      color: AppColors.info,
+                                      color: AppColors.danger,
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),
@@ -139,7 +192,7 @@ class HomeScreen extends StatelessWidget {
                                     "Pending Tasks",
                                     style: TextStyle(
                                       fontSize: 14,
-                                      color: AppColors.info,
+                                      color: AppColors.danger,
                                     ),
                                   ),
                                 ],
@@ -152,6 +205,19 @@ class HomeScreen extends StatelessWidget {
                   ),
                 ),
               ),
+              const SizedBox(height: 20),
+              // Expanded(
+              //   child: SingleChildScrollView(
+              //     child: TaskCard(
+              //       title: taskProvider.taskTitleController.text,
+              //       description: taskProvider.taskDescriptionController.text,
+              //       date: taskProvider.dueDateController.text,
+              //       time: taskProvider.timeController.text,
+              //       priority: taskProvider.priorityController.text,
+              //       status: taskProvider.statusController.text,
+              //     ),
+              //   ),
+              // ),
             ],
           ),
         ),

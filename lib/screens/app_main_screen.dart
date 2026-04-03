@@ -14,11 +14,7 @@ class AppMainScreen extends StatefulWidget {
 class _AppMainScreenState extends State<AppMainScreen> {
   int _currentIndex = 0;
 
-  final List<Widget> _screens = [
-    const HomeScreen(),
-    const AddTaskScreen(),
-    const ProfileScreen(),
-  ];
+  final List<Widget> _screens = [const HomeScreen(), const AddTaskScreen()];
 
   @override
   Widget build(BuildContext context) {
@@ -49,10 +45,6 @@ class _AppMainScreenState extends State<AppMainScreen> {
           BottomNavigationBarItem(
             icon: Icon(Icons.task_outlined),
             label: "Tasks",
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person_outline_rounded),
-            label: "Profile",
           ),
         ],
       ),

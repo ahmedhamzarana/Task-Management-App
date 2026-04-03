@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:task_management_app/providers/add_task_provider.dart';
 import 'package:task_management_app/utils/app_colors.dart';
 import 'package:task_management_app/providers/profile_provider.dart';
+import 'package:task_management_app/utils/app_routes.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -9,6 +11,7 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final profileProvider = Provider.of<ProfileProvider>(context);
+    final taskProvider = Provider.of<AddTaskProvider>(context);
     WidgetsBinding.instance.addPostFrameCallback((_) {
       profileProvider.fetchUserProfile();
     });
@@ -25,10 +28,24 @@ class HomeScreen extends StatelessWidget {
           ),
         ),
         actions: [
-          IconButton(
-            onPressed: () {},
-            icon: const Icon(Icons.settings),
-            color: AppColors.bglight,
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 10),
+            child: GestureDetector(
+              onTap: () => Navigator.pushNamed(context, AppRoutes.profileRoute),
+              child: SizedBox(
+                height: 25,
+                child: CircleAvatar(
+                  backgroundColor: AppColors.bglight,
+                  child: Text(
+                    profileProvider.userName != null &&
+                            profileProvider.userName!.isNotEmpty
+                        ? profileProvider.userName![0].toUpperCase()
+                        : "U",
+                    style: const TextStyle(color: AppColors.primary),
+                  ),
+                ),
+              ),
+            ),
           ),
         ],
         backgroundColor: AppColors.primary,

@@ -16,7 +16,7 @@ class _AppMainScreenState extends State<AppMainScreen> {
 
   final List<Widget> _screens = [
     const HomeScreen(),
-    const TaskScreen(),
+    const AddTaskScreen(),
     const ProfileScreen(),
   ];
 

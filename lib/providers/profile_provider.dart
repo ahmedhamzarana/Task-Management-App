@@ -29,9 +29,9 @@ class ProfileProvider extends ChangeNotifier {
       userName = profileData['name'];
       userEmail = profileData['email'];
 
-      print("User Profile Loaded: $profileData");
+      debugPrint("User Profile Loaded: $profileData");
     } catch (e) {
-      print("Error fetching profile: $e");
+      debugPrint("Error fetching profile: $e");
     } finally {
       isLoading = false;
       notifyListeners();

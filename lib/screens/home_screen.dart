@@ -79,6 +79,13 @@ class _HomeScreenState extends State<HomeScreen> {
                     end: Alignment.bottomRight,
                     colors: [AppColors.primary, AppColors.secondry],
                   ),
+                  boxShadow: [
+                    BoxShadow(
+                      color: AppColors.secondry.withAlpha(20),
+                      blurRadius: 20,
+                      offset: const Offset(0, 10),
+                    ),
+                  ],
                   borderRadius: BorderRadius.circular(20),
                 ),
                 child: Padding(
@@ -206,18 +213,19 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
               const SizedBox(height: 20),
-              // Expanded(
-              //   child: SingleChildScrollView(
-              //     child: TaskCard(
-              //       title: taskProvider.taskTitleController.text,
-              //       description: taskProvider.taskDescriptionController.text,
-              //       date: taskProvider.dueDateController.text,
-              //       time: taskProvider.timeController.text,
-              //       priority: taskProvider.priorityController.text,
-              //       status: taskProvider.statusController.text,
-              //     ),
-              //   ),
-              // ),
+              Expanded(
+                child: SingleChildScrollView(
+                  child: TaskCard(
+                    title: "Design Landing Page",
+                    description:
+                        "Create a responsive landing page for the new product launch.",
+                    date: "2024-06-15",
+                    time: "2024-06-15 14:00",
+                    priority: "High",
+                    status: "Pending",
+                  ),
+                ),
+              ),
             ],
           ),
         ),

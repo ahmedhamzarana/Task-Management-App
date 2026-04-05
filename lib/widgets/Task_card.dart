@@ -69,7 +69,7 @@ class TaskCard extends StatelessWidget {
                   color: AppColors.info.withAlpha(40),
                   borderRadius: BorderRadius.circular(10),
                 ),
-              )
+              ),
             ],
           ),
           const SizedBox(width: 20),
@@ -115,18 +115,26 @@ class TaskCard extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 16),
-                
+
                 // Bottom Status Row
                 Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 12,
+                    vertical: 6,
+                  ),
                   decoration: BoxDecoration(
                     color: AppColors.primary.withAlpha(15),
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      const Icon(Icons.sync, size: 14, color: AppColors.primary),
+                      const Icon(
+                        Icons.sync,
+                        size: 14,
+                        color: AppColors.primary,
+                      ),
                       const SizedBox(width: 6),
                       Text(
                         status,
@@ -138,7 +146,7 @@ class TaskCard extends StatelessWidget {
                       ),
                     ],
                   ),
-                )
+                ),
               ],
             ),
           ),
@@ -153,7 +161,9 @@ class TaskCard extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
       decoration: BoxDecoration(
         // Using Alpha for the tinted background effect
-        color: isHigh ? AppColors.primary.withAlpha(25) : AppColors.info.withAlpha(25),
+        color: isHigh
+            ? AppColors.primary.withAlpha(25)
+            : AppColors.info.withAlpha(25),
         borderRadius: BorderRadius.circular(30),
       ),
       child: Text(

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:task_management_app/screens/home_screen.dart';
-import 'package:task_management_app/screens/profile_screen.dart';
 import 'package:task_management_app/screens/task_screen.dart';
 import 'package:task_management_app/utils/app_colors.dart';
 
@@ -43,6 +42,7 @@ class _AppMainScreenState extends State<AppMainScreen> {
             label: "Home",
           ),
           BottomNavigationBarItem(
+            backgroundColor: AppColors.primary,
             icon: Icon(Icons.task_outlined),
             label: "Tasks",
           ),

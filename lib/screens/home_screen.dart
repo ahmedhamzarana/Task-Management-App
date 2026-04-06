@@ -215,14 +215,24 @@ class _HomeScreenState extends State<HomeScreen> {
               const SizedBox(height: 20),
               Expanded(
                 child: SingleChildScrollView(
-                  child: TaskCard(
-                    title: "Design Landing Page",
-                    description:
-                        "Create a responsive landing page for the new product launch.",
-                    date: "2024-06-15",
-                    time: "2024-06-15 14:00",
-                    priority: "High",
-                    status: "Pending",
+                  child: GridView(
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 1,
+                          mainAxisSpacing: 10,
+                          crossAxisSpacing: 10,
+                        ),
+                    children: [
+                      TaskCard(
+                        title: "Design Landing Page",
+                        description:
+                            "Create a responsive landing page for the new product launch.",
+                        date: "2024-06-15",
+                        time: "2024-06-15 14:00",
+                        priority: "High",
+                        status: "Pending",
+                      ),
+                    ],
                   ),
                 ),
               ),

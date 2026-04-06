@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:task_management_app/providers/add_task_provider.dart';
+import 'package:task_management_app/providers/fetch_task_provider.dart';
 import 'package:task_management_app/providers/login_provider.dart';
 import 'package:task_management_app/providers/profile_provider.dart';
 import 'package:task_management_app/providers/register_provider.dart';
@@ -22,6 +23,7 @@ Future<void> main() async {
         ChangeNotifierProvider(create: (context) => RegisterProvider()),
         ChangeNotifierProvider(create: (context) => ProfileProvider()),
         ChangeNotifierProvider(create: (context) => AddTaskProvider()),
+        ChangeNotifierProvider(create: (context) => FetchTaskProvider()),
       ],
       child: const MyApp(),
     ),

@@ -21,20 +21,27 @@ class TaskCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Split safely to avoid RangeError
+    List<String> timeParts = time.split(" ");
+    String hourPart = timeParts.isNotEmpty ? timeParts[0] : "--:--";
+    String amPmPart = timeParts.length > 1 ? timeParts[1] : "";
+
     return Container(
+      // --- FIXED HEIGHT HERE ---
+      height: 180, 
+      // -------------------------
       margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 8),
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
         color: AppColors.bglight,
-        borderRadius: BorderRadius.circular(24), // Softer, more premium radius
+        borderRadius: BorderRadius.circular(24),
         boxShadow: [
           BoxShadow(
-            color: AppColors.secondry.withAlpha(20), // Subtle shadow
+            color: AppColors.secondry.withAlpha(20),
             blurRadius: 20,
             offset: const Offset(0, 10),
           ),
         ],
-        // Subtle border to define the card against bglight
         border: Border.all(color: AppColors.info.withAlpha(30)),
       ),
       child: Row(
@@ -44,7 +51,7 @@ class TaskCard extends StatelessWidget {
           Column(
             children: [
               Text(
-                time.split(" ")[0],
+                hourPart,
                 style: const TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.w800,
@@ -52,22 +59,24 @@ class TaskCard extends StatelessWidget {
                   letterSpacing: -0.5,
                 ),
               ),
-              Text(
-                time.split(" ")[1],
-                style: const TextStyle(
-                  fontSize: 12,
-                  fontWeight: FontWeight.bold,
-                  color: AppColors.primary,
+              if (amPmPart.isNotEmpty)
+                Text(
+                  amPmPart,
+                  style: const TextStyle(
+                    fontSize: 12,
+                    fontWeight: FontWeight.bold,
+                    color: AppColors.primary,
+                  ),
                 ),
-              ),
               const SizedBox(height: 12),
-              // Vertical timeline accent
-              Container(
-                width: 3,
-                height: 50,
-                decoration: BoxDecoration(
-                  color: AppColors.info.withAlpha(40),
-                  borderRadius: BorderRadius.circular(10),
+              // Use Expanded here so the line stretches exactly to the available space
+              Expanded(
+                child: Container(
+                  width: 3,
+                  decoration: BoxDecoration(
+                    color: AppColors.info.withAlpha(40),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
                 ),
               ),
             ],
@@ -97,6 +106,8 @@ class TaskCard extends StatelessWidget {
                 const SizedBox(height: 8),
                 Text(
                   title,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
                   style: const TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
@@ -105,36 +116,32 @@ class TaskCard extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 6),
+                // Description with constrained height
                 Text(
                   description,
                   maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
                   style: TextStyle(
                     fontSize: 14,
-                    color: AppColors.secondry.withAlpha(150), // Faded text
+                    color: AppColors.secondry.withAlpha(150),
                     height: 1.5,
                   ),
                 ),
-                const SizedBox(height: 16),
+                
+                // This pushes the Status Row to the very bottom of the fixed height
+                const Spacer(),
 
                 // Bottom Status Row
                 Container(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 12,
-                    vertical: 6,
-                  ),
+                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                   decoration: BoxDecoration(
                     color: AppColors.primary.withAlpha(15),
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      const Icon(
-                        Icons.sync,
-                        size: 14,
-                        color: AppColors.primary,
-                      ),
+                      const Icon(Icons.sync, size: 14, color: AppColors.primary),
                       const SizedBox(width: 6),
                       Text(
                         status,
@@ -160,10 +167,7 @@ class TaskCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
       decoration: BoxDecoration(
-        // Using Alpha for the tinted background effect
-        color: isHigh
-            ? AppColors.primary.withAlpha(25)
-            : AppColors.info.withAlpha(25),
+        color: isHigh ? AppColors.primary.withAlpha(25) : AppColors.info.withAlpha(25),
         borderRadius: BorderRadius.circular(30),
       ),
       child: Text(

@@ -21,32 +21,44 @@ class CustomInput extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Shared border style to match your Scheduler UI
+    final OutlineInputBorder commonBorder = OutlineInputBorder(
+      borderRadius: BorderRadius.circular(12), // Changed from 50 to 12
+      borderSide: const BorderSide(
+        color: Color(0xFFE9ECEF), // Matches the Scheduler border color
+        width: 1.0,
+      ),
+    );
+
     return TextField(
       controller: controller,
       cursorColor: AppColors.primary,
       maxLines: maxLines,
+      style: const TextStyle(
+        fontSize: 14,
+        fontWeight: FontWeight.w500,
+      ),
       decoration: InputDecoration(
         hintText: hintText,
-        hintStyle: const TextStyle(color: AppColors.primary),
+        hintStyle: const TextStyle(
+          color: Color(0xFFADB5BD), // Matches your previous UI hint color
+          fontSize: 14,
+        ),
         errorText: errorText,
         filled: true,
-        fillColor: AppColors.bglight.withAlpha(25),
+        fillColor: Colors.white, // Matches Scheduler background
         prefixIcon: prefixIcon,
         suffixIcon: suffixIcon,
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(50),
-          borderSide: const BorderSide(color: AppColors.info, width: 2),
+        
+        // Borders updated to match the Scheduler style
+        border: commonBorder,
+        enabledBorder: commonBorder,
+        focusedBorder: commonBorder.copyWith(
+          borderSide: const BorderSide(color: AppColors.primary, width: 1.5),
         ),
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(50),
-          borderSide: const BorderSide(color: AppColors.info, width: 2),
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(50),
-          borderSide: const BorderSide(color: AppColors.info, width: 2),
-        ),
+        
         contentPadding: const EdgeInsets.symmetric(
-          horizontal: 20,
+          horizontal: 16,
           vertical: 14,
         ),
       ),

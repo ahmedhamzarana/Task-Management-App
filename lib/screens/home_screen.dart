@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:task_management_app/providers/add_task_provider.dart';
+import 'package:task_management_app/providers/fetch_task_provider.dart';
 import 'package:task_management_app/utils/app_colors.dart';
 import 'package:task_management_app/providers/profile_provider.dart';
 import 'package:task_management_app/utils/app_routes.dart';
@@ -13,20 +13,26 @@ class HomeScreen extends StatefulWidget {
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
+// ... imports stay the same ...
+
 class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
-    // This runs ONLY ONCE when the widget is created
     WidgetsBinding.instance.addPostFrameCallback((_) {
       Provider.of<ProfileProvider>(context, listen: false).fetchUserProfile();
+      Provider.of<FetchTaskProvider>(context, listen: false).fetchTasks();
     });
   }
 
   @override
   Widget build(BuildContext context) {
     final profileProvider = Provider.of<ProfileProvider>(context);
-    final taskProvider = Provider.of<AddTaskProvider>(context);
+    final taskProvider = Provider.of<FetchTaskProvider>(context);
+
+    // Get the task list from provider
+    final tasks = taskProvider.tasks;
+
     return Scaffold(
       backgroundColor: AppColors.bglight,
       appBar: AppBar(
@@ -64,180 +70,116 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-        child: Container(
-          width: MediaQuery.of(context).size.width,
-          height: MediaQuery.of(context).size.height,
-          color: AppColors.bglight,
-          child: Column(
-            children: [
-              Container(
-                height: 150,
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                    colors: [AppColors.primary, AppColors.secondry],
-                  ),
-                  boxShadow: [
-                    BoxShadow(
-                      color: AppColors.secondry.withAlpha(20),
-                      blurRadius: 20,
-                      offset: const Offset(0, 10),
-                    ),
-                  ],
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.all(10),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "Hi, ${profileProvider.userName ?? "User"}!",
-                        style: TextStyle(
-                          fontSize: 20,
-                          color: AppColors.bglight,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      Row(
-                        children: [
-                          Expanded(
-                            child: Container(
-                              height: 70,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                color: AppColors.success.withAlpha(25),
-                                border: Border.all(
-                                  color: AppColors.success.withAlpha(60),
-                                ),
-                              ),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    "10",
-                                    style: TextStyle(
-                                      fontSize: 18,
-                                      color: AppColors.success,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                  const SizedBox(height: 5),
-                                  const Text(
-                                    "All Tasks",
-                                    style: TextStyle(
-                                      fontSize: 14,
-                                      color: AppColors.success,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                          const SizedBox(width: 10),
+        child: Column(
+          children: [
+            // --- HEADER STATS CONTAINER ---
+            _buildHeaderStats(profileProvider, tasks),
 
-                          Expanded(
-                            child: Container(
-                              height: 70,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                color: AppColors.info.withAlpha(25),
-                                border: Border.all(
-                                  color: AppColors.info.withAlpha(60),
-                                ),
-                              ),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    "10",
-                                    style: TextStyle(
-                                      fontSize: 18,
-                                      color: AppColors.info,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                  const SizedBox(height: 5),
-                                  const Text(
-                                    "Completed Tasks",
-                                    style: TextStyle(
-                                      fontSize: 14,
-                                      color: AppColors.info,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                          const SizedBox(width: 10),
-                          Expanded(
-                            child: Container(
-                              height: 70,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                color: AppColors.danger.withAlpha(25),
-                                border: Border.all(
-                                  color: AppColors.danger.withAlpha(60),
-                                ),
-                              ),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    "5",
-                                    style: TextStyle(
-                                      fontSize: 18,
-                                      color: AppColors.danger,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                  const SizedBox(height: 5),
-                                  Text(
-                                    "Pending Tasks",
-                                    style: TextStyle(
-                                      fontSize: 14,
-                                      color: AppColors.danger,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ],
+            const SizedBox(height: 20),
+
+            // --- TASK LIST SECTION ---
+            Expanded(
+              child: taskProvider.isLoading
+                  ? const Center(
+                      child: CircularProgressIndicator(),
+                    ) // Show loader
+                  : tasks.isEmpty
+                  ? const Center(
+                      child: Text("No tasks found"),
+                    ) // Show empty state
+                  : GridView.builder(
+                      itemCount: tasks.length, // Dynamic count
+                      padding: const EdgeInsets.only(bottom: 20),
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 1,
+                        childAspectRatio:
+                            MediaQuery.of(context).size.width / 200,
                       ),
-                    ],
-                  ),
-                ),
-              ),
-              const SizedBox(height: 20),
-              Expanded(
-                child: SingleChildScrollView(
-                  child: GridView(
-                    gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 1,
-                          mainAxisSpacing: 10,
-                          crossAxisSpacing: 10,
-                        ),
-                    children: [
-                      TaskCard(
-                        title: "Design Landing Page",
-                        description:
-                            "Create a responsive landing page for the new product launch.",
-                        date: "2024-06-15",
-                        time: "2024-06-15 14:00",
-                        priority: "High",
-                        status: "Pending",
-                      ),
-                    ],
-                  ),
-                ),
-              ),
+                      itemBuilder: (context, index) {
+                        final task = tasks[index]; // Get individual task map
+
+                        // REMOVED 'const' here because data is dynamic
+                        return TaskCard(
+                          title: task["title"] ?? "No Title",
+                          description: task["description"] ?? "No Description",
+                          date: task["display_date"] ?? "No Date",
+                          time: task["time"] ?? "00:00 AM",
+                          priority: task["priority"] ?? "Low",
+                          status: task["status"] ?? "Pending",
+                        );
+                      },
+                    ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  // Refactored Header for clarity
+  Widget _buildHeaderStats(ProfileProvider profile, List tasks) {
+    // Basic logic to calculate stats (you can move this to provider later)
+    int completed = tasks.where((t) => t['status'] == 'Completed').length;
+    int pending = tasks.where((t) => t['status'] == 'Pending').length;
+
+    return Container(
+      height: 150,
+      width: double.infinity,
+      decoration: BoxDecoration(
+        gradient: const LinearGradient(
+          colors: [AppColors.primary, AppColors.secondry],
+        ),
+        borderRadius: BorderRadius.circular(20),
+      ),
+      padding: const EdgeInsets.all(15),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          Text(
+            "Hi, ${profile.userName ?? "User"}!",
+            style: const TextStyle(
+              color: Colors.white,
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          Row(
+            children: [
+              _statBox("All", "${tasks.length}", AppColors.success),
+              const SizedBox(width: 10),
+              _statBox("Done", "$completed", AppColors.info),
+              const SizedBox(width: 10),
+              _statBox("Pending", "$pending", AppColors.danger),
             ],
           ),
+        ],
+      ),
+    );
+  }
+
+  Widget _statBox(String label, String value, Color color) {
+    return Expanded(
+      child: Container(
+        height: 65,
+        decoration: BoxDecoration(
+          color: color.withValues(alpha: 0.2),
+          borderRadius: BorderRadius.circular(10),
+          border: Border.all(color: color.withValues(alpha: 0.4)),
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              value,
+              style: TextStyle(
+                color: color,
+                fontWeight: FontWeight.bold,
+                fontSize: 16,
+              ),
+            ),
+            Text(label, style: TextStyle(color: color, fontSize: 12)),
+          ],
         ),
       ),
     );

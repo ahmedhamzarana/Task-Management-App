@@ -103,4 +103,9 @@ class AddTaskProvider extends ChangeNotifier {
       notifyListeners();
     }
   }
+
+  void setPriority(String level) {
+    priorityController.text = level;
+    notifyListeners();
+  }
 }

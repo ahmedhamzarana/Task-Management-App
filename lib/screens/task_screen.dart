@@ -202,8 +202,7 @@ class AddTaskScreen extends StatelessWidget {
     return Expanded(
       child: GestureDetector(
         onTap: () {
-          provider.priorityController.text = level;
-          provider.notifyListeners();
+          provider.setPriority(level);
         },
         child: AnimatedContainer(
           duration: const Duration(milliseconds: 200),

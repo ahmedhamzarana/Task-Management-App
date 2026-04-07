@@ -63,46 +63,54 @@ class _HomeScreenState extends State<HomeScreen> {
         ],
         backgroundColor: AppColors.primary,
       ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-        child: Column(
-          children: [
-            // --- HEADER STATS CONTAINER ---
-            _buildHeaderStats(profileProvider, tasks),
+      body: taskProvider.isLoading
+          ? const LinearProgressIndicator(
+              color: AppColors.primary,
+              backgroundColor: AppColors.bglight,
+              minHeight: 1,
+            )
+          : Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+              child: Column(
+                children: [
+                  // --- HEADER STATS CONTAINER ---
+                  _buildHeaderStats(profileProvider, tasks),
 
-            const SizedBox(height: 20),
+                  const SizedBox(height: 20),
 
-            // --- TASK LIST SECTION ---
-            Expanded(
-              child: // Show loader
-              tasks.isEmpty
-                  ? const Center(
-                      child: Text("No tasks found"),
-                    ) // Show empty state
-                  : GridView.builder(
-                      itemCount: tasks.length, // Dynamic count
-                      padding: const EdgeInsets.only(bottom: 10),
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 1,
-                        childAspectRatio:
-                            MediaQuery.of(context).size.width / 200,
-                      ),
-                      itemBuilder: (context, index) {
-                        final task = tasks[index];
-                        return TaskCard(
-                          title: task["title"] ?? "No Title",
-                          description: task["description"] ?? "No Description",
-                          date: task["display_date"] ?? "No Date",
-                          time: task["time"] ?? "00:00 AM",
-                          priority: task["priority"] ?? "Low",
-                          status: task["status"] ?? "Pending",
-                        );
-                      },
-                    ),
+                  // --- TASK LIST SECTION ---
+                  Expanded(
+                    child: // Show loader
+                    tasks.isEmpty
+                        ? const Center(
+                            child: Text("No tasks found"),
+                          ) // Show empty state
+                        : GridView.builder(
+                            itemCount: tasks.length, // Dynamic count
+                            padding: const EdgeInsets.only(bottom: 10),
+                            gridDelegate:
+                                SliverGridDelegateWithFixedCrossAxisCount(
+                                  crossAxisCount: 1,
+                                  childAspectRatio:
+                                      MediaQuery.of(context).size.width / 200,
+                                ),
+                            itemBuilder: (context, index) {
+                              final task = tasks[index];
+                              return TaskCard(
+                                title: task["title"] ?? "No Title",
+                                description:
+                                    task["description"] ?? "No Description",
+                                date: task["display_date"] ?? "No Date",
+                                time: task["time"] ?? "00:00 AM",
+                                priority: task["priority"] ?? "Low",
+                                status: task["status"] ?? "Pending",
+                              );
+                            },
+                          ),
+                  ),
+                ],
+              ),
             ),
-          ],
-        ),
-      ),
     );
   }
 

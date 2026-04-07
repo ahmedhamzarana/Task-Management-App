@@ -8,9 +8,11 @@ class TaskCard extends StatelessWidget {
   final String time;
   final String priority;
   final String status;
+  final VoidCallback? onTap;
 
   const TaskCard({
     super.key,
+    required this.onTap,
     required this.title,
     required this.description,
     required this.date,
@@ -28,7 +30,7 @@ class TaskCard extends StatelessWidget {
 
     return Container(
       // --- FIXED HEIGHT HERE ---
-      height: 180, 
+      height: 180,
       // -------------------------
       margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 8),
       padding: const EdgeInsets.all(20),
@@ -127,28 +129,47 @@ class TaskCard extends StatelessWidget {
                     height: 1.5,
                   ),
                 ),
-                
+
                 // This pushes the Status Row to the very bottom of the fixed height
                 const Spacer(),
 
                 // Bottom Status Row
                 Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 12,
+                    vertical: 6,
+                  ),
                   decoration: BoxDecoration(
                     color: AppColors.primary.withAlpha(15),
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: Row(
-                    mainAxisSize: MainAxisSize.min,
                     children: [
-                      const Icon(Icons.sync, size: 14, color: AppColors.primary),
-                      const SizedBox(width: 6),
-                      Text(
-                        status,
-                        style: const TextStyle(
-                          fontSize: 11,
+                      Row(
+                        children: [
+                          const Icon(
+                            Icons.sync,
+                            size: 14,
+                            color: AppColors.primary,
+                          ),
+                          const SizedBox(width: 6),
+                          Text(
+                            status,
+                            style: const TextStyle(
+                              fontSize: 11,
+                              color: AppColors.primary,
+                              fontWeight: FontWeight.w900,
+                            ),
+                          ),
+                        ],
+                      ),
+                      Spacer(),
+                      GestureDetector(
+                        onTap: onTap,
+                        child: Icon(
+                          Icons.arrow_forward_ios,
+                          size: 15,
                           color: AppColors.primary,
-                          fontWeight: FontWeight.w900,
                         ),
                       ),
                     ],
@@ -167,7 +188,9 @@ class TaskCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
       decoration: BoxDecoration(
-        color: isHigh ? AppColors.primary.withAlpha(25) : AppColors.info.withAlpha(25),
+        color: isHigh
+            ? AppColors.primary.withAlpha(25)
+            : AppColors.info.withAlpha(25),
         borderRadius: BorderRadius.circular(30),
       ),
       child: Text(

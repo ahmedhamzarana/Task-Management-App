@@ -4,19 +4,16 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 class FetchTaskProvider extends ChangeNotifier {
   final supabase = Supabase.instance.client;
 
-  // --- STATE ---
   List<Map<String, dynamic>> _tasks = [];
   List<Map<String, dynamic>> get tasks => _tasks;
 
-  bool _isLoading = false;
-  bool get isLoading => _isLoading;
+  bool isLoading = false;
 
-  // --- METHODS ---
   Future<void> fetchTasks() async {
     final user = supabase.auth.currentUser;
     if (user == null) return;
 
-    _isLoading = true;
+    isLoading = true;
     notifyListeners();
 
     try {
@@ -34,7 +31,7 @@ class FetchTaskProvider extends ChangeNotifier {
     } catch (e) {
       debugPrint("Error fetching tasks: $e");
     } finally {
-      _isLoading = false;
+      isLoading = false;
       notifyListeners();
     }
   }

@@ -104,6 +104,13 @@ class _HomeScreenState extends State<HomeScreen> {
                                 time: task["time"] ?? "00:00 AM",
                                 priority: task["priority"] ?? "Low",
                                 status: task["status"] ?? "Pending",
+                                onTap: () {
+                                  Navigator.pushNamed(
+                                    context,
+                                    AppRoutes.taskDetailRoute,
+                                    arguments: task,
+                                  );
+                                },
                               );
                             },
                           ),

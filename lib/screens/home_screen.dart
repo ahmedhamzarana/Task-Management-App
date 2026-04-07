@@ -13,8 +13,6 @@ class HomeScreen extends StatefulWidget {
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
-// ... imports stay the same ...
-
 class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
@@ -29,10 +27,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     final profileProvider = Provider.of<ProfileProvider>(context);
     final taskProvider = Provider.of<FetchTaskProvider>(context);
-
-    // Get the task list from provider
     final tasks = taskProvider.tasks;
-
     return Scaffold(
       backgroundColor: AppColors.bglight,
       appBar: AppBar(
@@ -79,26 +74,21 @@ class _HomeScreenState extends State<HomeScreen> {
 
             // --- TASK LIST SECTION ---
             Expanded(
-              child: taskProvider.isLoading
-                  ? const Center(
-                      child: CircularProgressIndicator(),
-                    ) // Show loader
-                  : tasks.isEmpty
+              child: // Show loader
+              tasks.isEmpty
                   ? const Center(
                       child: Text("No tasks found"),
                     ) // Show empty state
                   : GridView.builder(
                       itemCount: tasks.length, // Dynamic count
-                      padding: const EdgeInsets.only(bottom: 20),
+                      padding: const EdgeInsets.only(bottom: 10),
                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 1,
                         childAspectRatio:
                             MediaQuery.of(context).size.width / 200,
                       ),
                       itemBuilder: (context, index) {
-                        final task = tasks[index]; // Get individual task map
-
-                        // REMOVED 'const' here because data is dynamic
+                        final task = tasks[index];
                         return TaskCard(
                           title: task["title"] ?? "No Title",
                           description: task["description"] ?? "No Description",

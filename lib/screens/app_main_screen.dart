@@ -18,35 +18,50 @@ class _AppMainScreenState extends State<AppMainScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: _screens[_currentIndex], // ✅ THIS WAS MISSING
+      body: _screens[_currentIndex],
 
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _currentIndex,
-        backgroundColor: AppColors.primary,
-        selectedItemColor: AppColors.bglight,
-
-        unselectedItemColor: AppColors.bglight.withAlpha(150),
-        type: BottomNavigationBarType.fixed,
-        selectedFontSize: 14,
-        unselectedFontSize: 12,
-        selectedIconTheme: const IconThemeData(size: 28),
-        onTap: (index) {
-          setState(() {
-            _currentIndex = index;
-          });
-        },
-
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home_outlined),
-            label: "Home",
-          ),
-          BottomNavigationBarItem(
-            backgroundColor: AppColors.primary,
-            icon: Icon(Icons.task_outlined),
-            label: "Tasks",
-          ),
-        ],
+      bottomNavigationBar: NavigationBarTheme(
+        // NavigationBar ko customize karne ke liye Theme use karna behtar hai
+        data: NavigationBarThemeData(
+          indicatorColor: AppColors.danger, // Selection capsule color
+          labelTextStyle: WidgetStateProperty.resolveWith((states) {
+            if (states.contains(WidgetState.selected)) {
+              return const TextStyle(
+                fontSize: 14,
+                fontWeight: FontWeight.bold,
+                color: Colors.white,
+              );
+            }
+            return TextStyle(fontSize: 12, color: Colors.white.withAlpha(150));
+          }),
+          iconTheme: WidgetStateProperty.resolveWith((states) {
+            if (states.contains(WidgetState.selected)) {
+              return const IconThemeData(size: 28, color: Colors.white);
+            }
+            return IconThemeData(size: 24, color: Colors.white.withAlpha(150));
+          }),
+        ),
+        child: NavigationBar(
+          selectedIndex: _currentIndex,
+          backgroundColor: AppColors.primary,
+          onDestinationSelected: (index) {
+            setState(() {
+              _currentIndex = index;
+            });
+          },
+          destinations: const [
+            NavigationDestination(
+              icon: Icon(Icons.home_outlined),
+              selectedIcon: Icon(Icons.home),
+              label: "Home",
+            ),
+            NavigationDestination(
+              icon: Icon(Icons.task_outlined),
+              selectedIcon: Icon(Icons.task),
+              label: "Tasks",
+            ),
+          ],
+        ),
       ),
     );
   }

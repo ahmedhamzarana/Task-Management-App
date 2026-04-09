@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:task_management_app/utils/app_routes.dart';
 import '../providers/add_task_provider.dart';
 import '../utils/app_colors.dart';
 import '../widgets/custom_input.dart'; // Ensure correct import for your CustomInput
@@ -15,15 +16,15 @@ class AddTaskScreen extends StatelessWidget {
       backgroundColor: const Color(0xFFF8F9FA),
       appBar: AppBar(
         elevation: 0.5,
-        backgroundColor: Colors.white,
+        backgroundColor: AppColors.primary,
         leading: IconButton(
-          icon: const Icon(Icons.close_rounded, color: AppColors.secondry),
-          onPressed: () => Navigator.pop(context),
+          icon: const Icon(Icons.close_rounded, color: AppColors.bglight),
+          onPressed: () => Navigator.pushNamed(context, AppRoutes.appmainRoute),
         ),
         title: const Text(
-          "New Task",
+          "Create New Task",
           style: TextStyle(
-            color: AppColors.secondry,
+            color: AppColors.bglight,
             fontWeight: FontWeight.w800,
             fontSize: 16,
           ),
@@ -49,8 +50,6 @@ class AddTaskScreen extends StatelessWidget {
             ),
 
             const SizedBox(height: 24),
-
-            // --- DESCRIPTION SECTION ---
             _buildSectionLabel("DESCRIPTION"),
             const SizedBox(height: 8),
             CustomInput(
@@ -69,7 +68,6 @@ class AddTaskScreen extends StatelessWidget {
 
             const SizedBox(height: 24),
 
-            // --- SCHEDULE SECTION ---
             _buildSectionLabel("SCHEDULE"),
             const SizedBox(height: 8),
             Row(
@@ -96,7 +94,6 @@ class AddTaskScreen extends StatelessWidget {
 
             const SizedBox(height: 24),
 
-            // --- PRIORITY LEVEL ---
             _buildSectionLabel("PRIORITY LEVEL"),
             const SizedBox(height: 10),
             Row(
@@ -107,7 +104,6 @@ class AddTaskScreen extends StatelessWidget {
 
             const SizedBox(height: 30),
 
-            // --- CREATE BUTTON ---
             SizedBox(
               width: double.infinity,
               height: 48,

@@ -52,7 +52,7 @@ class TaskDetailScreen extends StatelessWidget {
                     backgroundColor: AppColors.primary,
                     padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
                   ),
-                  child: Text('Edit'),
+                  child: Text('Save Changes'),
                 ),
                 SizedBox(width: 16),
                 ElevatedButton(
@@ -66,7 +66,7 @@ class TaskDetailScreen extends StatelessWidget {
                   child: Text('Delete'),
                 ),
               ],
-            )
+            ),
           ],
         ),
       ),

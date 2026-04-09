@@ -31,6 +31,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       backgroundColor: AppColors.bglight,
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         title: const Text(
           "Task Sync",
           style: TextStyle(

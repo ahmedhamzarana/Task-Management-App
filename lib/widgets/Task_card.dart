@@ -71,7 +71,6 @@ class TaskCard extends StatelessWidget {
                   ),
                 ),
               const SizedBox(height: 12),
-              // Use Expanded here so the line stretches exactly to the available space
               Expanded(
                 child: Container(
                   width: 3,
@@ -85,7 +84,6 @@ class TaskCard extends StatelessWidget {
           ),
           const SizedBox(width: 20),
 
-          // Right: Content Details
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,

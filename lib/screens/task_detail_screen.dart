@@ -46,7 +46,6 @@ class TaskDetailScreen extends StatelessWidget {
               children: [
                 ElevatedButton(
                   onPressed: () {
-                    // Handle edit action
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: AppColors.primary,
@@ -57,7 +56,6 @@ class TaskDetailScreen extends StatelessWidget {
                 SizedBox(width: 16),
                 ElevatedButton(
                   onPressed: () {
-                    // Handle delete action
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.redAccent,

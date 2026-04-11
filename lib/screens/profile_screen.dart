@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:task_management_app/providers/fetch_task_provider.dart';
 import 'package:task_management_app/providers/profile_provider.dart';
 import 'package:task_management_app/utils/app_colors.dart';
+import 'package:task_management_app/utils/app_routes.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -42,7 +43,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
           children: [
             IconButton(
               icon: const Icon(Icons.arrow_back_ios, color: Colors.white),
-              onPressed: () => Navigator.pop(context),
+              onPressed: () =>
+                  Navigator.pushNamed(context, AppRoutes.appmainRoute),
             ),
             const SizedBox(width: 10),
             const Text(

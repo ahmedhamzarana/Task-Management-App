@@ -90,6 +90,8 @@ class AddTaskProvider extends ChangeNotifier {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text("Task Synced successfully!")),
         );
+        Navigator.pushNamed(context, "/appmain");
+        clearInputs();
       }
     } catch (e) {
       debugPrint("Error saving task: $e");
@@ -102,6 +104,17 @@ class AddTaskProvider extends ChangeNotifier {
       _isLoading = false;
       notifyListeners();
     }
+  }
+
+  void clearInputs() {
+    taskTitleController.clear();
+    taskDescriptionController.clear();
+    dueDateController.clear();
+    timeController.clear();
+    priorityController.clear();
+    statusController.clear();
+    _rawDate = null;
+    notifyListeners();
   }
 
   void setPriority(String level) {

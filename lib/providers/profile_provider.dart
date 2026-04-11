@@ -18,14 +18,12 @@ class ProfileProvider extends ChangeNotifier {
     notifyListeners();
 
     try {
-      // Fixed: Removed trailing comma in select string
       final profileData = await supabase
           .from("tbl_users")
           .select("id, name, email")
           .eq("user_id", user.id)
           .single();
 
-      // Store the data in provider variables
       userName = profileData['name'];
       userEmail = profileData['email'];
 

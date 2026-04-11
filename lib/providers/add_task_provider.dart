@@ -27,7 +27,7 @@ class AddTaskProvider extends ChangeNotifier {
 
     if (pickedDate != null) {
       _rawDate = pickedDate;
-      dueDateController.text = DateFormat('E MMM d').format(pickedDate);
+      dueDateController.text = DateFormat('E MMM d, y').format(pickedDate);
 
       if (context.mounted) {
         final TimeOfDay? pickedTime = await showTimePicker(

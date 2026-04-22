@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:task_management_app/providers/edit_task_provider.dart';
 import 'package:task_management_app/providers/fetch_task_provider.dart';
 import 'package:task_management_app/utils/app_colors.dart';
 import 'package:task_management_app/providers/profile_provider.dart';
@@ -105,12 +106,21 @@ class _HomeScreenState extends State<HomeScreen> {
                                 time: task["time"] ?? "00:00 AM",
                                 priority: task["priority"] ?? "Low",
                                 status: task["status"] ?? "Pending",
-                                onTap: () {
-                                  Navigator.pushNamed(
-                                    context,
-                                    AppRoutes.taskDetailRoute,
-                                    arguments: task,
-                                  );
+                                onStatusToggle: () async {
+                                  // 1. Perform the update
+                                  await context
+                                      .read<EditTaskProvider>()
+                                      .updateStatus(
+                                        task['id'].toString(),
+                                        task['status'],
+                                      );
+
+                                  // 2. Refresh the list so the UI shows the new data
+                                  if (context.mounted) {
+                                    context
+                                        .read<FetchTaskProvider>()
+                                        .fetchTasks();
+                                  }
                                 },
                               );
                             },

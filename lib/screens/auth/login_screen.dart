@@ -44,7 +44,7 @@ class LoginScreen extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 10),
-
+        
                     // --- EMAIL ---
                     TextField(
                       style: const TextStyle(color: AppColors.bglight),
@@ -72,9 +72,9 @@ class LoginScreen extends StatelessWidget {
                         ),
                       ),
                     ),
-
+        
                     const SizedBox(height: 20),
-
+        
                     // --- PASSWORD ---
                     TextField(
                       controller: loginprovider.passwordController,
@@ -112,9 +112,9 @@ class LoginScreen extends StatelessWidget {
                         ),
                       ),
                     ),
-
+        
                     const SizedBox(height: 5),
-
+        
                     // --- REMEMBER + FORGOT ---
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -147,9 +147,9 @@ class LoginScreen extends StatelessWidget {
                         ),
                       ],
                     ),
-
+        
                     const SizedBox(height: 30),
-
+        
                     // --- LOGIN BUTTON ---
                     SizedBox(
                       width: double.infinity,
@@ -179,9 +179,9 @@ class LoginScreen extends StatelessWidget {
                               ),
                       ),
                     ),
-
+        
                     const SizedBox(height: 20),
-
+        
                     // --- REGISTER LINK ---
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -206,9 +206,9 @@ class LoginScreen extends StatelessWidget {
                         ),
                       ],
                     ),
-
+        
                     const SizedBox(height: 15),
-
+        
                     // --- OR DIVIDER ---
                     Row(
                       children: [
@@ -233,9 +233,9 @@ class LoginScreen extends StatelessWidget {
                         ),
                       ],
                     ),
-
+        
                     const SizedBox(height: 10),
-
+        
                     // --- SOCIAL LOGINS ---
                     Row(
                       children: [

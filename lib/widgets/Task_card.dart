@@ -8,11 +8,11 @@ class TaskCard extends StatelessWidget {
   final String time;
   final String priority;
   final String status;
-  final VoidCallback? onTap;
+  final VoidCallback? onStatusToggle; // Rename for clarity
 
   const TaskCard({
     super.key,
-    required this.onTap,
+    required this.onStatusToggle,
     required this.title,
     required this.description,
     required this.date,
@@ -23,15 +23,14 @@ class TaskCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Split safely to avoid RangeError
     List<String> timeParts = time.split(" ");
     String hourPart = timeParts.isNotEmpty ? timeParts[0] : "--:--";
     String amPmPart = timeParts.length > 1 ? timeParts[1] : "";
 
+    bool isCompleted = status.toLowerCase() == 'completed';
+
     return Container(
-      // --- FIXED HEIGHT HERE ---
       height: 180,
-      // -------------------------
       margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 8),
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
@@ -49,16 +48,16 @@ class TaskCard extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Left: The Time Column
+          // Time Column
           Column(
             children: [
               Text(
                 hourPart,
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.w800,
-                  color: AppColors.secondry,
-                  letterSpacing: -0.5,
+                  color: isCompleted ? Colors.grey : AppColors.secondry,
+                  decoration: isCompleted ? TextDecoration.lineThrough : null,
                 ),
               ),
               if (amPmPart.isNotEmpty)
@@ -84,6 +83,7 @@ class TaskCard extends StatelessWidget {
           ),
           const SizedBox(width: 20),
 
+          // Content Column
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -97,7 +97,6 @@ class TaskCard extends StatelessWidget {
                         color: AppColors.info,
                         fontSize: 11,
                         fontWeight: FontWeight.bold,
-                        letterSpacing: 1.1,
                       ),
                     ),
                     _buildPriorityTag(priority),
@@ -108,66 +107,58 @@ class TaskCard extends StatelessWidget {
                   title,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
-                    color: AppColors.secondry,
-                    height: 1.2,
+                    color: isCompleted ? Colors.grey : AppColors.secondry,
+                    decoration: isCompleted ? TextDecoration.lineThrough : null,
                   ),
                 ),
-                const SizedBox(height: 6),
-                // Description with constrained height
-                Text(
-                  description,
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                  style: TextStyle(
-                    fontSize: 14,
-                    color: AppColors.secondry.withAlpha(150),
-                    height: 1.5,
-                  ),
-                ),
-
-                // This pushes the Status Row to the very bottom of the fixed height
                 const Spacer(),
 
-                // Bottom Status Row
+                // Status Row
                 Container(
                   padding: const EdgeInsets.symmetric(
                     horizontal: 12,
                     vertical: 6,
                   ),
                   decoration: BoxDecoration(
-                    color: AppColors.primary.withAlpha(15),
+                    color: isCompleted
+                        ? Colors.green.withAlpha(30)
+                        : AppColors.primary.withAlpha(15),
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: Row(
                     children: [
-                      Row(
-                        children: [
-                          const Icon(
-                            Icons.sync,
-                            size: 14,
-                            color: AppColors.primary,
-                          ),
-                          const SizedBox(width: 6),
-                          Text(
-                            status,
-                            style: const TextStyle(
-                              fontSize: 11,
-                              color: AppColors.primary,
-                              fontWeight: FontWeight.w900,
-                            ),
-                          ),
-                        ],
+                      Icon(
+                        isCompleted ? Icons.check_circle_outline : Icons.sync,
+                        size: 14,
+                        color: isCompleted ? Colors.green : AppColors.primary,
                       ),
-                      Spacer(),
+                      const SizedBox(width: 6),
+                      Text(
+                        status.toUpperCase(),
+                        style: TextStyle(
+                          fontSize: 11,
+                          color: isCompleted ? Colors.green : AppColors.primary,
+                          fontWeight: FontWeight.w900,
+                        ),
+                      ),
+                      const Spacer(),
                       GestureDetector(
-                        onTap: onTap,
-                        child: Icon(
-                          Icons.arrow_forward_ios,
-                          size: 15,
-                          color: AppColors.primary,
+                        onTap: onStatusToggle,
+                        behavior: HitTestBehavior.opaque,
+                        child: Padding(
+                          padding: const EdgeInsets.all(4.0),
+                          child: Icon(
+                            isCompleted
+                                ? Icons.check_circle
+                                : Icons.radio_button_unchecked,
+                            size: 20,
+                            color: isCompleted
+                                ? Colors.green
+                                : AppColors.primary,
+                          ),
                         ),
                       ),
                     ],
@@ -183,11 +174,14 @@ class TaskCard extends StatelessWidget {
 
   Widget _buildPriorityTag(String priority) {
     bool isHigh = priority.toLowerCase() == 'high';
+    bool isMedium = priority.toLowerCase() == 'medium';
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
       decoration: BoxDecoration(
         color: isHigh
             ? AppColors.primary.withAlpha(25)
+            : isMedium
+            ? AppColors.success.withAlpha(25)
             : AppColors.info.withAlpha(25),
         borderRadius: BorderRadius.circular(30),
       ),
@@ -196,7 +190,11 @@ class TaskCard extends StatelessWidget {
         style: TextStyle(
           fontSize: 10,
           fontWeight: FontWeight.w900,
-          color: isHigh ? AppColors.primary : AppColors.info,
+          color: isHigh
+              ? AppColors.primary
+              : isMedium
+              ? AppColors.success
+              : AppColors.info,
         ),
       ),
     );

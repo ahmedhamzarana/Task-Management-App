@@ -113,7 +113,7 @@ class LoginScreen extends StatelessWidget {
                       ),
                     ),
         
-                    const SizedBox(height: 5),
+                    const SizedBox(height: 7),
         
                     // --- REMEMBER + FORGOT ---
                     Row(
@@ -123,7 +123,7 @@ class LoginScreen extends StatelessWidget {
                           children: [
                             Checkbox(
                               activeColor: AppColors.primary,
-                              side: const BorderSide(color: AppColors.bglight),
+                              side: const BorderSide(color: AppColors.bglight,style: BorderStyle.solid,),
                               checkColor: AppColors.bglight,
                               value: loginprovider.isrememeber,
                               onChanged: (value) =>
